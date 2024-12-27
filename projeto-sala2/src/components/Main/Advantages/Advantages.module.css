@@ -1,0 +1,18 @@
+.advantages{
+    width: 280px;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    gap:1rem;
+}
+
+.advantages h4{
+    font-size: 1.25rem;
+    font-weight: 700;
+    color:#47A138;
+}
+
+.advantages p{
+    color:#767676;
+    text-align: center;
+}
