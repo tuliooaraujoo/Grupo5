@@ -1,0 +1,32 @@
+.notFound{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap:1rem;
+    padding:2rem;
+    margin-bottom:2rem;
+    background: linear-gradient(180deg, rgba(0, 77, 97, 1) 0%, rgba(255, 255, 255, 1) 100%);
+}
+
+.notFound_titulo, .notFound_text{
+    text-align: center;
+}
+
+.notFound_titulo{
+    font-size:1.5rem;
+    font-weight: 700;
+}
+
+.notFound_button{
+    background-color: #FF5031;
+    color:#FFF;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-decoration: none;
+}
+
