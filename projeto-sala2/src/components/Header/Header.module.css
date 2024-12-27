@@ -68,6 +68,10 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        background-color: transparent;
+        color:#47A138;
+        border: none;
+        cursor: pointer;
     }
 
     .links {

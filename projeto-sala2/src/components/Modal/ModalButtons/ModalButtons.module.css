@@ -3,13 +3,12 @@
     display: flex;
     align-items: center;
     gap: 1.5rem;
-    cursor: pointer;
-
 }
 
 .register, .login{
     padding: 8px 16px;
     border-radius: 4px;
+    cursor: pointer;
 }
 
 /* Estilos para o header */
