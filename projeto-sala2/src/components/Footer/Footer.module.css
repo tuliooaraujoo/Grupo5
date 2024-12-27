@@ -1,0 +1,45 @@
+.footer{
+    background-color: #000;
+    color:#FFF;
+
+    display:flex;
+    align-items: center;
+    justify-content: space-around;
+
+    padding:40px;
+}
+
+.container, .ultimo_container{
+    width:230px;
+    display:flex;
+    flex-direction: column;
+    gap:1rem;
+}
+
+.container h4, .ultimo_container h4{
+    font-weight: 700;
+}
+
+.ultimo_container{
+    gap:1.5rem;
+    margin-left: 2rem;
+}
+
+.icons{
+    display:flex;
+    gap:1.5rem;
+    font-size: 2rem;
+}
+
+@media (max-width: 659px) {
+    .footer{
+        flex-direction: column;
+        justify-content: space-around;
+        gap:2rem;
+    }
+
+    .ultimo_container{
+        margin-left: 0;
+    }
+}
+
