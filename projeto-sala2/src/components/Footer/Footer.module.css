@@ -20,6 +20,11 @@
     font-weight: 700;
 }
 
+.ancora{
+    color:#FFF;
+    text-decoration: none;
+}
+
 .ultimo_container{
     gap:1.5rem;
     margin-left: 2rem;

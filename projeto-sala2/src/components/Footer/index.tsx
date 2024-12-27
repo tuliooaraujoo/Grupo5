@@ -24,7 +24,7 @@ const Footer = () => {
             <div className={styles.container}>
                 <h4>Serviços</h4>
                 {services.map((service, index) => (
-                    <a key={index} href={service.href}>
+                    <a key={index} href={service.href} className={styles.ancora}>
                         {service.label}
                     </a>
                 ))}
@@ -33,7 +33,7 @@ const Footer = () => {
                 <h4>Contato</h4>
                 <span>0800 004 250 08</span>
                 {contacts.map((contact, index) => (
-                    <a key={index} href={contact.href}>
+                    <a key={index} href={contact.href} className={styles.ancora}>
                         {contact.label}
                     </a>
                 ))}

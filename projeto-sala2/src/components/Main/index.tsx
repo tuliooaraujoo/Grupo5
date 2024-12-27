@@ -17,6 +17,7 @@ const Main = () => {
                     alt="Ilustração da página inicial"
                     width={660}
                     height={410}
+                    className={styles.image}
                 />
             </div>
             <div>
