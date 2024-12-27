@@ -1,0 +1,35 @@
+.container_login{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding:4rem;
+    gap:2rem;
+}
+
+.login_form{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+}
+
+.esqueci{
+    text-decoration:underline;
+    color:#47A138;
+    margin-left:20px;
+}
+
+.acessar{
+    background-color: #47A138;
+    color:#FFF;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.acessar:hover{
+    transform: scale(1.1);
+}
