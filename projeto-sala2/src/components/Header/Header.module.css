@@ -1,0 +1,90 @@
+.header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 96px;
+    background-color: #000000;
+    color: #47A138;
+    font-family: "Inter", sans-serif;
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.logo_Completo,
+.logo_Icone {
+    display: none;
+}
+
+@media (min-width: 1024px) {
+    .logo_Completo {
+        display: block;
+    }
+}
+
+@media (min-width: 660px) and (max-width: 1023px) {
+    .logo_Icone {
+        display: block;
+    }
+}
+
+.links {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+}
+
+.links a{
+    text-decoration: none;
+    color: #47A138;
+}
+
+.hamburger {
+    display: none;
+    cursor: pointer;
+}
+
+@media (max-width: 659px) {
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 16px;
+        position: relative;
+    }
+
+    .logo_Completo {
+        display: flex;
+        position: absolute;
+        right: 32px;
+        top: 32px;
+        margin-right: 0;
+    }
+
+    .hamburger {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .links {
+        display: none;
+        flex-direction: column;
+        align-items: start;
+        position: absolute;
+        top: 96px;
+        left: 16px;
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 16px;
+        gap: 8px;
+        z-index: 1000;
+    }
+
+    .links.open {
+        display: flex;
+    }
+}
