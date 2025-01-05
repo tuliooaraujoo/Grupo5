@@ -2,32 +2,39 @@ import Image from "next/image";
 import styles from "./Forms.module.css";
 import Inputs from "../Inputs";
 
-interface Field {
-    id: string;
-    placeholder: string;
-}
-
-interface CheckboxProps {
-    label: string;
-}
-
-interface FormProps {
+export interface FormProps {
     imageSrc: string;
     imageAlt: string;
     title: string;
-    fields: Field[];
-    checkbox?: CheckboxProps;
+    fields: {
+        id: string;
+        placeholder: string;
+        type?: string;
+    }[];
+    checkbox?: {
+        label: string;
+    };
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    formData: {
+        [key: string]: string | boolean;
+    };
+    errors: {
+        [key: string]: string;
+    };
 }
 
-const Form = ({ 
-    imageSrc, 
-    imageAlt, 
-    title, 
-    fields, 
-    checkbox, 
+const Form = ({
+    imageSrc,
+    imageAlt,
+    title,
+    fields,
+    checkbox,
+    onChange,
+    formData,
+    errors,
 }: FormProps) => {
     return (
-        <form onSubmit={(e) => e.preventDefault()} className={styles.form}>
+        <form className={styles.form}>
             <Image
                 src={imageSrc}
                 alt={imageAlt}
@@ -41,12 +48,21 @@ const Form = ({
                         key={field.id}
                         id={field.id}
                         placeholder={field.placeholder}
+                        value={formData[field.id] as string}
+                        onChange={onChange}
+                        error={errors[field.id.toLowerCase()]}
                     />
                 ))}
                 {checkbox && (
                     <div className={styles.form_checkbox}>
-                        <input type="checkbox" />
-                        <label>{checkbox.label}</label>
+                        <input
+                            id="Aceito"
+                            type="checkbox"
+                            checked={formData.Aceito as boolean}
+                            onChange={onChange}
+                        />
+                        <label htmlFor="Aceito">{checkbox.label}</label>
+                        {errors.aceito && <span className={styles.error}>{errors.aceito}</span>}
                     </div>
                 )}
             </div>
@@ -55,5 +71,3 @@ const Form = ({
 };
 
 export default Form;
-
-

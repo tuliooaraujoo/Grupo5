@@ -1,14 +1,35 @@
-.input_form label{
-    font-size: 1rem;
-    font-weight: 700;
-    color:#000;
+.input_form {
+    position: relative;
+    margin-bottom: 1rem;
 }
 
-.input_form input{
-    width:100%;
+.input_form label {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #000;
+}
+
+.input_form input {
+    width: 100%;
     background-color: #FFF;
-    color:#000;
-    border:2px solid #DEE9EA;
+    color: #000;
+    border: 2px solid #DEE9EA;
     border-radius: 0.5rem;
     padding: 0.5rem;
+    transition: border-color 0.3s ease;
+}
+
+.input_form input.error {
+    border-color: #BF1313;
+}
+
+.input_form input.success {
+    border-color: #47A138;
+}
+
+.input_form .error {
+    color: #BF1313;
+    font-size: 14px;
+    margin-top: 0.25rem;
+    display: block;
 }
