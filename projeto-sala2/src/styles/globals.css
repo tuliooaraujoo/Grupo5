@@ -1,14 +1,44 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body{
-    font-family: 'Inter', sans-serif;
-    font-size: 1rem;
-    font-weight: 400;
+:root {
 
+    /* COLORS: */
+    --green: #47A138;
+    --orange: #FF5031;
+    --blue: #004D61;
+    --error: #BF1313;
+    --gray: #DEE9EA;
+    --lightgray: #F8F8F8;
+    --white: #FFFFFF;
+    --black: #000000;
+    --lightblack: #2F2E41;
+
+    /* FONTS: */
+    --principal: "Inter", sans-serif;
+
+    /* SIZES: */
+    --font-small:0.812rem;
+    --font-medium:1.000rem;
+    --font-large:1.250rem;
+    --font-extra-large:1.562rem;
+
+    /* WEIGHTS: */
+    --light:100;
+    --regular:400;
+    --bold:700;
+
+    /* SPACES: */
+    --space-small: 0.5rem;
+    --space-medium: 1rem;
+    --space-large: 1.5rem;
+    --space-extra-large: 2rem;
+}
+
+body {
     width: auto;
     height: 100%;
 }

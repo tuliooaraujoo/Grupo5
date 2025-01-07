@@ -1,4 +1,3 @@
-import React from "react";
 import estilos from "./Extrato.module.css";
 import Transacoes from "./Transacoes";
 
@@ -13,7 +12,7 @@ interface ExtratoProps {
   transacoes: Transacao[];
 }
 
-const Extrato: React.FC<ExtratoProps> = ({ transacoes }) => {
+const Extrato = ({ transacoes }: ExtratoProps) => {
   return (
     <section className={estilos.container}>
       <h2 className={estilos.titulo}>Extrato</h2>

@@ -1,8 +1,8 @@
-import React from "react";
 import Image, { StaticImageData } from "next/image";
-import estilos from "./Cartoes.module.css";
+import styles from "./Cartoes.module.css";
 import cartaoFisico from "./fisico.svg";
 import cartaoDigital from "./digital.svg";
+import Button from "../Button";
 
 interface CartaoProps {
   tipo: string;
@@ -10,8 +10,8 @@ interface CartaoProps {
   funcao: string;
 }
 
-const Cartoes: React.FC = () => {
-  const cartoes: CartaoProps[] = [
+const Cartoes = () => {
+  const cards: CartaoProps[] = [
     {
       tipo: "Cartão físico",
       imagem: cartaoFisico,
@@ -25,30 +25,42 @@ const Cartoes: React.FC = () => {
   ];
 
   return (
-    <section className="container">
-      <div className="detalhe__superior" />
-      <div className={estilos.wrapper}>
-        <h2>Meus cartões</h2>
-        {cartoes.map((cartao, index) => (
-          <div key={index}>
-            <p>{cartao.tipo}</p>
-            <div className={estilos.cartao}>
-              <Image
-                src={cartao.imagem}
-                alt={cartao.tipo}
-                width={100}
-                height={100}
-              />
-              <div className={estilos.funcoes}>
-                <button className={estilos.botaoConfigurar}>Configurar</button>
-                <button className={estilos.botaoBloquear}>Bloquear</button>
-                <span>Função: {cartao.funcao}</span>
-              </div>
+    <section className={styles.container}>
+      <h2 className={styles.title}>Meus cartões</h2>
+      {cards.map((card, index) => (
+        <div key={index}>
+          <p className={styles.subtitle}>{card.tipo}</p>
+          <div className={styles.card}>
+            <Image
+              src={card.imagem}
+              alt={card.tipo}
+              width={327}
+              height={164}
+            />
+            <div className={styles.buttons}>
+              <Button
+                backgroundColor="var(--orange)"
+                color="var(--white)"
+                padding="var(--space-small)"
+                border="none"
+                width="250px"
+              >
+                Configurar
+              </Button>
+              <Button
+                backgroundColor="transparent"
+                color="var(--error)"
+                padding="var(--space-small)"
+                border="2px solid var(--error)"
+                width="250px"
+              >
+                Configurar
+              </Button>
+              <span>Função: {card.funcao}</span>
             </div>
           </div>
-        ))}
-      </div>
-      <div className="detalhe__inferior" />
+        </div>
+      ))}
     </section>
   );
 };
