@@ -2,18 +2,17 @@ interface ButtonProps {
   color: string;
   backgroundColor?: string;
   border?: string;
-  padding: string;
   width: string;
   children: React.ReactNode;
+  onClick?: () => void
 }
 
-const Button = ({ width, backgroundColor, color, padding, border, children }: ButtonProps) => {
+const Button = ({ width, backgroundColor, color, border, children, onClick }: ButtonProps) => {
 
   return <button style={{
     width: width,
     height: "48px",
     backgroundColor: backgroundColor,
-    padding: padding,
     color: color,
     border: border,
     borderRadius: "var(--space-small)",
@@ -21,6 +20,7 @@ const Button = ({ width, backgroundColor, color, padding, border, children }: Bu
     fontSize: "var(--font-medium)",
     fontWeight: "var(--bold)"
   }}
+    onClick={onClick}
   >
     {children}
   </button>;

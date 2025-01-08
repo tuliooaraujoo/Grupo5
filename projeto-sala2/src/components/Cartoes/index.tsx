@@ -41,7 +41,6 @@ const Cartoes = () => {
               <Button
                 backgroundColor="var(--orange)"
                 color="var(--white)"
-                padding="var(--space-small)"
                 border="none"
                 width="250px"
               >
@@ -50,7 +49,6 @@ const Cartoes = () => {
               <Button
                 backgroundColor="transparent"
                 color="var(--error)"
-                padding="var(--space-small)"
                 border="2px solid var(--error)"
                 width="250px"
               >

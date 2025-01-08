@@ -4,7 +4,7 @@
 }
 
 .input_form label {
-    font-size: var(--font-medium);
+    font-size: var(--font-small);
     font-weight: var(--bold);
     color: var(--black);
 }
@@ -13,9 +13,9 @@
     width: 100%;
     background-color: var(--white);
     color: var(--black);
-    border: 1px solid var(--gray);
     border-radius: var(--space-small);
     padding: var(--space-small);
+    border: 1px solid var(--gray);
     transition: border-color 0.3s ease;
 }
 
@@ -23,9 +23,12 @@
     border-color: var(--error);
 }
 
+.input_form input.success {
+    border-color: var(--gray);
+}
+
 .input_form .error {
     color: var(--error);
     font-size: var(--font-small);
     margin-top: var(--space-small);
-    display: block;
 }

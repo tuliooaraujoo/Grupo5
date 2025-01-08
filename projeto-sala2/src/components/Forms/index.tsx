@@ -55,13 +55,15 @@ const Form = ({
                 ))}
                 {checkbox && (
                     <div className={styles.form_checkbox}>
-                        <input
-                            id="Aceito"
-                            type="checkbox"
-                            checked={formData.Aceito as boolean}
-                            onChange={onChange}
-                        />
-                        <label htmlFor="Aceito">{checkbox.label}</label>
+                        <div className={styles.checkbox}>
+                            <input
+                                id="Aceito"
+                                type="checkbox"
+                                checked={formData.Aceito as boolean}
+                                onChange={onChange}
+                            />
+                            <label htmlFor="Aceito">{checkbox.label}</label>
+                        </div>
                         {errors.aceito && <span className={styles.error}>{errors.aceito}</span>}
                     </div>
                 )}

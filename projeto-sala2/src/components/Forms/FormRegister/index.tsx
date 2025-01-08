@@ -1,6 +1,7 @@
 import { useFormRegister } from "@/hooks/useFormRegister";
 import styles from "./FormRegister.module.css";
 import Form from "..";
+import Button from "@/components/Button";
 
 const FormRegister = () => {
     const { formData, errors, handleChange, handleSubmit } = useFormRegister();
@@ -12,22 +13,28 @@ const FormRegister = () => {
     ];
 
     return (
-        <div className={styles.container_registrar}>
+        <div className={styles.container_register}>
             <Form
                 imageSrc="/images/ilustrations/register.svg"
                 imageAlt="Ilustração de uma pessoa ao lado de um computador gigante"
                 title="Preencha os campos abaixo para criar sua conta corrente"
                 fields={fields}
                 checkbox={{
-                    label: "Li e estou ciente quanto às condições de tratamento dos meus dados conforme descrito na Política de Privacidade do banco.",
+                    label: "Li e estou ciente quanto às condições de tratamento dos meus dados conforme descrito na Política de Privacidade do banco."
                 }}
                 onChange={handleChange}
                 formData={formData}
                 errors={errors}
             />
-            <button className={styles.cadastrar} onClick={handleSubmit}>
+            <Button
+                width="50%"
+                backgroundColor="var(--orange)"
+                color="var(--white)"
+                border="none"
+                onClick={handleSubmit}
+            >
                 Abrir minha conta
-            </button>
+            </Button>
         </div>
     );
 };

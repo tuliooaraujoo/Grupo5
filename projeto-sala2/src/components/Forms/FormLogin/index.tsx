@@ -1,13 +1,14 @@
 import { useFormLogin } from "@/hooks/useFormLogin";
 import styles from "./FormLogin.module.css";
 import Form from "..";
+import Button from "@/components/Button";
 
 const FormLogin = () => {
     const { formData, errors, handleChange, handleSubmit } = useFormLogin();
 
     const fields = [
         { id: "Email", placeholder: "Digite seu email" },
-        { id: "Senha", placeholder: "Digite sua senha" },
+        { id: "Senha", placeholder: "Digite sua senha", type: "password" },
     ];
 
     return (
@@ -24,9 +25,15 @@ const FormLogin = () => {
                 />
                 <a href="#" className={styles.esqueci}>Esqueci minha senha!</a>
             </div>
-            <button className={styles.acessar} onClick={handleSubmit}>
+            <Button
+                width="50%"
+                backgroundColor="var(--green)"
+                color="var(--white)"
+                border="none"
+                onClick={handleSubmit}
+            >
                 Acessar
-            </button>
+            </Button>
         </div>
     );
 };

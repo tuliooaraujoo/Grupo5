@@ -1,22 +1,8 @@
-.container_registrar{
+.container_register {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding:4rem;
-    gap:2rem;
-}
-
-.cadastrar{
-    background-color: #FF5031;
-    color:#FFF;
-    border: none;
-    border-radius: 0.5rem;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    font-weight: 700;
-}
-
-.cadastrar:hover{
-    transform: scale(1.1);
+    padding: var(--space-extra-large);
+    gap: var(--space-extra-large);
 }
