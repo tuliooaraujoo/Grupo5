@@ -24,7 +24,7 @@ const Footer = () => {
             <div className={styles.container}>
                 <h4>Serviços</h4>
                 {services.map((service, index) => (
-                    <a key={index} href={service.href} className={styles.ancora}>
+                    <a key={index} href={service.href} className={styles.anchor}>
                         {service.label}
                     </a>
                 ))}
@@ -33,15 +33,15 @@ const Footer = () => {
                 <h4>Contato</h4>
                 <span>0800 004 250 08</span>
                 {contacts.map((contact, index) => (
-                    <a key={index} href={contact.href} className={styles.ancora}>
+                    <a key={index} href={contact.href} className={styles.anchor}>
                         {contact.label}
                     </a>
                 ))}
             </div>
-            <div className={styles.ultimo_container}>
+            <div className={styles.last_container}>
                 <h4>Desenvolvido por Alura</h4>
                 <Image
-                    src="/images/logotipo/logotipo_completo_branco.svg"
+                    src="/images/logotipo/logo_white.svg"
                     alt="Logotipo do Bytebank"
                     width={145}
                     height={32}

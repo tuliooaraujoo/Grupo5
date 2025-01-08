@@ -8,23 +8,23 @@
     padding:var(--space-extra-large);
 }
 
-.container, .ultimo_container{
+.container, .last_container{
     width:230px;
     display:flex;
     flex-direction: column;
     gap:var(--space-medium);
 }
 
-.container h4, .ultimo_container h4{
+.container h4, .last_container h4{
     font-weight: var(--bold);
 }
 
-.ancora{
+.anchor{
     color:var(--branco);
     text-decoration: none;
 }
 
-.ultimo_container{
+.last_container{
     gap:var(--space-large);
     margin-left: var(--space-extra-large);
 }
@@ -33,6 +33,7 @@
     display:flex;
     gap:var(--space-large);
     font-size: var(--space-extra-large);
+    cursor:pointer;
 }
 
 @media (max-width: 659px) {
@@ -42,7 +43,7 @@
         gap:var(--space-extra-large);
     }
 
-    .ultimo_container{
+    .last_container{
         margin-left: 0;
     }
 }
