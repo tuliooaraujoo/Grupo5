@@ -14,7 +14,14 @@
     justify-content: center;
 }
 
-.esqueci {
+.button_login{
+    width:50%;
+    background-color:var(--green);
+    color:var(--white);
+    border:none
+}
+
+.forget {
     text-decoration: underline;
     color: var(--green);
     font-size: var(--font-medium);

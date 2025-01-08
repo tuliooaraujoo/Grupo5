@@ -27,10 +27,7 @@ const FormRegister = () => {
                 errors={errors}
             />
             <Button
-                width="50%"
-                backgroundColor="var(--orange)"
-                color="var(--white)"
-                border="none"
+                className={styles.button_register}
                 onClick={handleSubmit}
             >
                 Abrir minha conta

@@ -6,3 +6,10 @@
     padding: var(--space-extra-large);
     gap: var(--space-extra-large);
 }
+
+.button_register{
+    width:50%;
+    background-color:var(--orange);
+    color:var(--white);
+    border:none
+}

@@ -5,3 +5,7 @@
     font-size: var(--font-medium);
     font-weight: var(--bold);
 }
+
+.button:hover{
+    transform: scale(1.05);
+}

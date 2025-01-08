@@ -23,13 +23,10 @@ const FormLogin = () => {
                     formData={formData}
                     errors={errors}
                 />
-                <a href="#" className={styles.esqueci}>Esqueci minha senha!</a>
+                <a href="#" className={styles.forget}>Esqueci minha senha!</a>
             </div>
             <Button
-                width="50%"
-                backgroundColor="var(--green)"
-                color="var(--white)"
-                border="none"
+                className={styles.button_login}
                 onClick={handleSubmit}
             >
                 Acessar
