@@ -19,6 +19,9 @@
     --lightblack: #2F2E41;
     --background-gradient: 180deg, rgba(0, 77, 97, 1) 0%, rgba(255, 255, 255, 1) 100%;
 
+    /* SHADOW:*/
+    --shadow: 0 4x 8px rgba(0, 0, 0, 0.1);
+
     /* SIZES: */
     --font-small:0.812rem;
     --font-medium:1.000rem;
@@ -32,11 +35,13 @@
     --bold:700;
 
     /* SPACES: */
+    --space-extra-small:0.25rem;
     --space-small: 0.5rem;
     --space-medium: 1rem;
     --space-large: 1.5rem;
     --space-extra-large: 2rem;
     --space-xxlarge:4rem;
+    --space-xxxlarge:6rem;
 }
 
 body {

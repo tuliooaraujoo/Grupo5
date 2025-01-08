@@ -2,31 +2,30 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    height: 96px;
-    background-color: #000000;
-    color: #47A138;
-    font-family: "Inter", sans-serif;
+    height: var(--space-xxxlarge);
+    background-color: var(--black);
+    color: var(--green);
 }
 
 .menu {
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: var(--space-large);
 }
 
-.logo_Completo,
-.logo_Icone {
+.logo_Full,
+.logo_Icon {
     display: none;
 }
 
 @media (min-width: 1024px) {
-    .logo_Completo {
+    .logo_Full {
         display: block;
     }
 }
 
 @media (min-width: 660px) and (max-width: 1023px) {
-    .logo_Icone {
+    .logo_Icon {
         display: block;
     }
 }
@@ -34,12 +33,12 @@
 .links {
     display: flex;
     align-items: center;
-    gap: 3rem;
+    gap: var(--space-large);
 }
 
 .links a{
     text-decoration: none;
-    color: #47A138;
+    color: var(--green);
 }
 
 .hamburger {
@@ -52,15 +51,15 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 0 16px;
+        padding: 0 var(--space-medium);
         position: relative;
     }
 
-    .logo_Completo {
+    .logo_Full {
         display: flex;
         position: absolute;
-        right: 32px;
-        top: 32px;
+        right: var(--space-extra-large);
+        top: var(--space-extra-large);
         margin-right: 0;
     }
 
@@ -69,7 +68,7 @@
         justify-content: center;
         align-items: center;
         background-color: transparent;
-        color:#47A138;
+        color:var(--green);
         border: none;
         cursor: pointer;
     }
@@ -79,12 +78,12 @@
         flex-direction: column;
         align-items: start;
         position: absolute;
-        top: 96px;
-        left: 16px;
-        background-color: #fff;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        padding: 16px;
-        gap: 8px;
+        top: var(--space-xxxlarge);
+        left: var(--space-medium);
+        background-color: var(--white);
+        box-shadow: var(--shadow);
+        padding: var(--space-medium);
+        gap: var(--space-small);
         z-index: 1000;
     }
 

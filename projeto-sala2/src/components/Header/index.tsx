@@ -6,6 +6,7 @@ import styles from "./Header.module.css";
 import { FiMenu } from "react-icons/fi";
 import ModalButtons from "../Modal/ModalButtons";
 import ModalApplication from "../Modal/ModalApplication";
+import Button from "../Button";
 
 const Header = () => {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -19,23 +20,26 @@ const Header = () => {
             <div className={styles.menu}>
                 <div className={styles.logo}>
                     <Image
-                        src="/images/logotipo/logotipo.png"
+                        src="/images/logotipo/logo.png"
                         alt="Logotipo do Bytebank"
                         width={145}
                         height={32}
-                        className={styles.logo_Completo}
+                        className={styles.logo_Full}
                     />
                     <Image
-                        src="/images/logotipo/icone_logotipo.png"
+                        src="/images/logotipo/icon_logo.png"
                         alt="Logotipo do Bytebank"
                         width={26}
                         height={26}
-                        className={styles.logo_Icone}
+                        className={styles.logo_Icon}
                     />
                 </div>
-                <button className={styles.hamburger} onClick={toggleMenu}>
+                <Button
+                    className={styles.hamburger}
+                    onClick={toggleMenu}
+                >
                     <FiMenu size={32} />
-                </button>
+                </Button>
                 <nav className={`${styles.links} ${menuOpen ? styles.open : ""}`}>
                     <a href="#">Sobre</a>
                     <a href="#">Serviços</a>
