@@ -3,16 +3,16 @@
     display:flex;
     flex-direction: column;
     align-items: center;
-    gap:1rem;
+    gap:var(--space-medium);
 }
 
 .advantages h4{
-    font-size: 1.25rem;
-    font-weight: 700;
-    color:#47A138;
+    font-size: var(--font-large);
+    font-weight: var(--bold);
+    color:var(--green);
 }
 
 .advantages p{
-    color:#767676;
+    color:var(--darkgray);
     text-align: center;
 }

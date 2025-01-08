@@ -29,7 +29,12 @@ const ListOfAdvantages = () => {
         <div className={styles.container}>
             <h3>Vantagens do nosso banco:</h3>
             <div className={styles.advantages_list}>
-                {advantagesList.map((advantage, index) => (<Advantages key={index} {...advantage} className={styles.advantages}/>))}
+                {advantagesList.map((advantage, index) => (
+                    <Advantages
+                        key={index}
+                        {...advantage}
+                        className={styles.advantages}
+                    />))}
             </div>
         </div>
     )

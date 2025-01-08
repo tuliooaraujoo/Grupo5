@@ -13,7 +13,7 @@ const Advantages = ({ image, text, paragraph }: AdvantagesProps) => {
         <div className={styles.advantages}>
             <Image
                 src={`/images/advantages/${image}.svg`}
-                alt="Advantages"
+                alt={`Vantagem:${text}`}
                 width={73}
                 height={56} />
             <h4>{text}</h4>

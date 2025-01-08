@@ -11,20 +11,20 @@
     --orange: #FF5031;
     --blue: #004D61;
     --error: #BF1313;
+    --darkgray: #767676;
     --gray: #DEE9EA;
     --lightgray: #F8F8F8;
     --white: #FFFFFF;
     --black: #000000;
     --lightblack: #2F2E41;
-
-    /* FONTS: */
-    --principal: "Inter", sans-serif;
+    --background-gradient: 180deg, rgba(0, 77, 97, 1) 0%, rgba(255, 255, 255, 1) 100%;
 
     /* SIZES: */
     --font-small:0.812rem;
     --font-medium:1.000rem;
     --font-large:1.250rem;
     --font-extra-large:1.562rem;
+    --font-xxlarge:1.750rem;
 
     /* WEIGHTS: */
     --light:100;
@@ -36,9 +36,11 @@
     --space-medium: 1rem;
     --space-large: 1.5rem;
     --space-extra-large: 2rem;
+    --space-xxlarge:4rem;
 }
 
 body {
     width: auto;
     height: 100%;
+    font-family: "Inter", sans-serif;
 }
