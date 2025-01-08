@@ -33,3 +33,17 @@
   align-items: center;
   gap: var(--space-medium);
 }
+
+.buttons_settings{
+  background-color:var(--orange);
+  color:var(--white);
+  border:none;
+  width:250px;
+}
+
+.button_block{
+  background-color: transparent;
+  color:var(--error);
+  border: 1px solid var(--error);
+  width:250px;
+}
