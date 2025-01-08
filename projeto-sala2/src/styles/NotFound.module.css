@@ -3,30 +3,30 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap:1rem;
-    padding:2rem;
-    margin-bottom:2rem;
-    background: linear-gradient(180deg, rgba(0, 77, 97, 1) 0%, rgba(255, 255, 255, 1) 100%);
+    gap:var(--space-medium);
+    padding:var(--space-extra-large);
+    margin-bottom:var(--space-extra-large);
+    background: linear-gradient(var(--background-gradient));
 }
 
-.notFound_titulo, .notFound_text{
+.notFound_title, .notFound_text{
     text-align: center;
 }
 
-.notFound_titulo{
-    font-size:1.5rem;
-    font-weight: 700;
+.notFound_title{
+    font-size:var(--space-large);
+    font-weight: var(--bold);
 }
 
 .notFound_button{
-    background-color: #FF5031;
-    color:#FFF;
+    background-color: var(--orange);
+    color:var(--white);
     border: none;
-    border-radius: 0.5rem;
-    padding: 0.5rem 1rem;
+    border-radius: var(--space-small);
+    padding: var(--space-small) var(--space-medium);
     cursor: pointer;
-    font-weight: 700;
-    margin-bottom: 1rem;
+    font-weight: var(--bold);
+    margin-bottom: var(--space-medium);
     text-decoration: none;
 }
 

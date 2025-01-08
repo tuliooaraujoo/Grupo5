@@ -10,7 +10,7 @@ export default function NotFound() {
         <ModalProvider>
             <Header />
             <div className={styles.notFound}>
-                <h2 className={styles.notFound_titulo}>Ops! Não encontramos a página...</h2>
+                <h2 className={styles.notFound_title}>Ops! Não encontramos a página...</h2>
                 <div className={styles.notFound_text}>
                     <p >E olha que exploramos o universo procurando por ela!</p>
                     <p>Que tal voltar e tentar novamente?</p>
