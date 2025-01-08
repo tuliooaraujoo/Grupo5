@@ -1,4 +1,7 @@
+"use client";
+
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { validateEmail } from "@/utils/validators";
 import { checkEmailExists } from "@/services/api";
 
@@ -12,6 +15,8 @@ export const useFormLogin = () => {
     email: "",
     senha: "",
   });
+
+  const router = useRouter(); // Inicializando o hook useRouter
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -49,6 +54,7 @@ export const useFormLogin = () => {
     }
 
     alert(`Bem-vindo, ${users[0]?.Nome}!`);
+    router.push("/dashboard");
   };
 
   return { formData, errors, handleChange, handleSubmit };
