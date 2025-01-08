@@ -2,39 +2,39 @@
 .buttons {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: var(--space-extra-large);
 }
 
 .register, .login{
-    padding: 8px 16px;
-    border-radius: 4px;
+    padding: var(--space-small) var(--space-medium);
+    border-radius: var(--space-small);
     cursor: pointer;
 }
 
 /* Estilos para o header */
 .header .register {
-    background-color: #47A138;
-    color: #FFF;
+    background-color: var(--green);
+    color: var(--white);
     border: none;
 }
 
 .header .login {
     background-color: transparent;
-    color: #47A138;
-    border: 1px solid #47A138;
+    color: var(--green);
+    border: 1px solid var(--green);
 }
 
 /* Estilos para o main */
 .main .register {
-    background-color: #000;
-    color: #FFF;
+    background-color: var(--black);
+    color: var(--white);
     border: none;
 }
 
 .main .login {
     background-color: transparent;
-    color: #000;
-    border: 1px solid #000;
+    color: var(--black);
+    border: 1px solid var(--black);
 }
 
 .main .login, .main .register{
@@ -52,7 +52,7 @@
 @media (max-width: 659px) {
     .main {
         justify-content: center;
-        padding: 16px;
+        padding: var(--space-medium);
     }
 
     .main .login, .main .register{

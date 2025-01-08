@@ -1,4 +1,6 @@
+import Button from "../Button";
 import styles from "./Modal.module.css";
+import {MdClose} from "react-icons/md"
 
 interface ModalProps {
     isOpen: boolean;
@@ -12,9 +14,12 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
     return (
         <div className={styles.overlay} onClick={onClose}>
             <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-                <button className={styles.closeButton} onClick={onClose}>
-                    &times;
-                </button>
+                <Button
+                    className={styles.closeButton}
+                    onClick={onClose}
+                >
+                    <MdClose />
+                </Button>
                 {children}
             </div>
         </div>

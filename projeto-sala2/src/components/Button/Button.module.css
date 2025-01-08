@@ -1,0 +1,7 @@
+.button{
+    height: 48px;
+    border-radius: var(--space-small);
+    cursor: pointer;
+    font-size: var(--font-medium);
+    font-weight: var(--bold);
+}
