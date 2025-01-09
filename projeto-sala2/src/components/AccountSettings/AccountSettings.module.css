@@ -1,0 +1,31 @@
+.container {
+    width: 997px;
+    background-image: url("../../../public/images/ilustrations/background.svg");
+    background-size:997px;
+    background-repeat: no-repeat;
+    display:flex;
+    flex-direction: column;
+    gap: var(--space-large);
+    padding:var(--space-large);
+    border-radius: var(--space-medium);
+}
+
+.content{
+    display: flex;
+    gap:var(--space-extra-large);
+}
+
+.form{
+    width:448px;
+    display: flex;
+    flex-direction: column;
+    gap:var(--space-medium);
+}
+
+.button_settings{
+    width:250px;
+    background-color: var(--orange);
+    border:none;
+    color: var(--white);
+    padding:var(--space-small);
+}

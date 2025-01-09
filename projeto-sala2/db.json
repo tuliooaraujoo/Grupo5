@@ -1,11 +1,5 @@
 {
   "users": [
-    {
-      "id": "bb03",
-      "Nome": "Rodrigo",
-      "Email": "rodrigo@exemplo.com",
-      "Senha": "Bolinha23!!@",
-      "Aceito": true
-    }
+
   ]
 }

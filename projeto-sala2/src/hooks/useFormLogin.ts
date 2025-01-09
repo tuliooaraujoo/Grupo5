@@ -16,7 +16,7 @@ export const useFormLogin = () => {
     senha: "",
   });
 
-  const router = useRouter(); // Inicializando o hook useRouter
+  const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;

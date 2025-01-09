@@ -1,14 +1,14 @@
-import Cards from "@/components/Cards";
+import AccountSettings from "@/components/AccountSettings";
 import Header from "@/components/Header";
 import { ModalProvider } from "@/context/ModalContext";
 
 export default function Dashboard() {
   return (
     <ModalProvider>
-    <div>
+      <div>
         <Header />
-      <Cards />
-    </div>
+        <AccountSettings />
+      </div>
     </ModalProvider>
   );
 }
