@@ -2,6 +2,7 @@ import { useFormRegister } from "@/hooks/useFormRegister";
 import styles from "./FormRegister.module.css";
 import Form from "..";
 import Button from "@/components/Button";
+import Image from "next/image";
 
 const FormRegister = () => {
     const { formData, errors, handleChange, handleSubmit } = useFormRegister();
@@ -14,9 +15,13 @@ const FormRegister = () => {
 
     return (
         <div className={styles.container_register}>
+            <Image
+                src="/images/ilustrations/register.svg"
+                alt="Ilustração de uma pessoa ao lado de um computador gigante"
+                width={330}
+                height={267}
+            />
             <Form
-                imageSrc="/images/ilustrations/register.svg"
-                imageAlt="Ilustração de uma pessoa ao lado de um computador gigante"
                 title="Preencha os campos abaixo para criar sua conta corrente"
                 fields={fields}
                 checkbox={{

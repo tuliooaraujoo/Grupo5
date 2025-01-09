@@ -2,6 +2,7 @@ import { useFormLogin } from "@/hooks/useFormLogin";
 import styles from "./FormLogin.module.css";
 import Form from "..";
 import Button from "@/components/Button";
+import Image from "next/image";
 
 const FormLogin = () => {
     const { formData, errors, handleChange, handleSubmit } = useFormLogin();
@@ -14,9 +15,13 @@ const FormLogin = () => {
     return (
         <div className={styles.container_login}>
             <div className={styles.login_form}>
+                <Image
+                    src="/images/ilustrations/login.svg"
+                    alt="Ilustração de uma pessoa ao lado de um celular gigante em uma tela de login"
+                    width={330}
+                    height={267}
+                />
                 <Form
-                    imageSrc="/images/ilustrations/login.svg"
-                    imageAlt="Ilustração de uma pessoa ao lado de um celular gigante em uma tela de login"
                     title="Login"
                     fields={fields}
                     onChange={handleChange}

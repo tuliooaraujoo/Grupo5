@@ -1,12 +1,9 @@
-import Image from "next/image";
 import styles from "./Forms.module.css";
 import CheckboxField from "../Inputs/CheckboxField";
 import TextField from "../Inputs/TextField";
 
 export interface FormProps {
-    imageSrc: string;
-    imageAlt: string;
-    title: string;
+    title?: string;
     fields: {
         id: string;
         placeholder: string;
@@ -25,8 +22,6 @@ export interface FormProps {
 }
 
 const Form = ({
-    imageSrc,
-    imageAlt,
     title,
     fields,
     checkbox,
@@ -36,12 +31,6 @@ const Form = ({
 }: FormProps) => {
     return (
         <form className={styles.form}>
-            <Image
-                src={imageSrc}
-                alt={imageAlt}
-                width={330}
-                height={267}
-            />
             <h4 className={styles.form_title}>{title}</h4>
             <div className={styles.form_fields}>
                 {fields.map((field) => (
