@@ -1,5 +1,5 @@
 import Image, { StaticImageData } from "next/image";
-import styles from "./Cartoes.module.css";
+import styles from "./Cards.module.css";
 import physicalCard from "./physical.svg";
 import digitalCard from "./digital.svg";
 import Button from "../Button";

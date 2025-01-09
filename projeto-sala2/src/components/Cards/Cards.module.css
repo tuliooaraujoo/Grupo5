@@ -5,7 +5,7 @@
   justify-content: center;
   flex-direction: column;
   gap: var(--space-medium);
-  background-image: url("./background.svg");
+  background-image: url("../../../public/images/ilustrations/background.svg");
   background-size: cover;
   background-repeat: no-repeat;
   width:690px;
@@ -34,7 +34,7 @@
   gap: var(--space-medium);
 }
 
-.buttons_settings{
+.button_settings{
   background-color:var(--orange);
   color:var(--white);
   border:none;
