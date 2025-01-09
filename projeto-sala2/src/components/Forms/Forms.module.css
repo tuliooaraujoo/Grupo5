@@ -19,23 +19,3 @@
     flex-direction: column;
     gap: var(--space-small);
 }
-
-.form_checkbox {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    gap: var(--space-small);
-    color: var(--black);
-}
-
-.checkbox {
-    display: flex;
-    align-items: center;
-    gap: var(--space-small);
-}
-
-.error {
-    color: var(--error);
-    font-size: var(--font-small);
-}

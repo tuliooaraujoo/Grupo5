@@ -1,4 +1,4 @@
-import styles from "./Inputs.module.css";
+import styles from "./TextField.module.css";
 
 interface InputProps {
     id: string;
@@ -8,7 +8,7 @@ interface InputProps {
     error?: string;
 }
 
-const Inputs = ({ id, placeholder, value, onChange, error }: InputProps) => {
+const TextField = ({ id, placeholder, value, onChange, error }: InputProps) => {
     const inputClass = error ? styles.error : styles.success;
 
     return (
@@ -27,7 +27,7 @@ const Inputs = ({ id, placeholder, value, onChange, error }: InputProps) => {
     );
 };
 
-export default Inputs;
+export default TextField;
 
 
 
