@@ -14,6 +14,7 @@ export default {
         blue: '#004D61',
         error: '#BF1313',
         darkgray: '#767676',
+        placeholder: "#8B8B8B",
         gray: '#DEE9EA',
         lightgray: '#F8F8F8',
         white: '#FFFFFF',
