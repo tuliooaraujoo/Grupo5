@@ -4,9 +4,10 @@ interface TextFieldProps {
     value?: string;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     error?: string;
+    className?: string
 }
 
-const TextField = ({ id, placeholder, value, onChange, error }: TextFieldProps) => {
+const TextField = ({ id, className, placeholder, value, onChange, error }: TextFieldProps) => {
     return (
         <div className="flex flex-col mb-6">
             <label className="mb-2 font-bold" htmlFor={id}>{id}</label>
@@ -16,7 +17,7 @@ const TextField = ({ id, placeholder, value, onChange, error }: TextFieldProps) 
                 placeholder={placeholder}
                 value={value}
                 onChange={onChange}
-                className={`border text-base rounded-lg p-3.5 mb-2 placeholder:text-placeholder placeholder:text-base focus:outline-green ${
+                className={`${className} border text-base rounded-lg p-3.5 mb-2 placeholder:text-placeholder placeholder:text-base focus:outline-green ${
                     error ? "border-error" : "border-gray"
                 }`}
             />

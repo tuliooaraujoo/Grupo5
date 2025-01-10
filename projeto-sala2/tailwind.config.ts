@@ -8,6 +8,9 @@ export default {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        'background': "url('/images/background.svg')"
+      },
       colors: {
         green: '#47A138',
         orange: '#FF5031',
