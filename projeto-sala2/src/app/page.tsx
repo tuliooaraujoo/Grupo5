@@ -6,11 +6,11 @@ import { ModalProvider } from "@/context/ModalContext";
 export default function Home() {
   return (
     <ModalProvider>
-    <div>
-      <Header />
-      <Main />
-      <Footer />
-    </div>
+      <div>
+        <Header isLoggedIn={false} />
+        <Main />
+        <Footer />
+      </div>
     </ModalProvider>
   );
 }

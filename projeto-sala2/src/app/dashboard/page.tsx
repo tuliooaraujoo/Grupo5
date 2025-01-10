@@ -6,7 +6,7 @@ export default function Dashboard() {
   return (
     <ModalProvider>
       <div>
-        <Header />
+        <Header isLoggedIn={false} />
         <AccountSettings />
       </div>
     </ModalProvider>

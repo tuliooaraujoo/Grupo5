@@ -1,93 +1,132 @@
 .header {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    height: var(--space-xxxlarge);
-    background-color: var(--black);
-    color: var(--green);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: var(--space-xxxlarge);
+  background-color: var(--black);
+  color: var(--green);
+}
+
+.headerLoggedIn {
+  background-color: #004d61;
+  color: white;
 }
 
 .menu {
-    display: flex;
-    align-items: center;
-    gap: var(--space-large);
+  display: flex;
+  align-items: center;
+  gap: var(--space-large);
 }
 
 .logo_Full,
 .logo_Icon {
-    display: none;
+  display: none;
 }
 
 @media (min-width: 1024px) {
-    .logo_Full {
-        display: block;
-    }
+  .logo_Full {
+    display: block;
+  }
 }
 
 @media (min-width: 660px) and (max-width: 1023px) {
-    .logo_Icon {
-        display: block;
-    }
+  .logo_Icon {
+    display: block;
+  }
 }
 
 .links {
-    display: flex;
-    align-items: center;
-    gap: var(--space-large);
+  display: flex;
+  align-items: center;
+  gap: var(--space-large);
 }
 
-.links a{
-    text-decoration: none;
-    color: var(--green);
+.links a {
+  text-decoration: none;
+  color: var(--green);
 }
 
 .hamburger {
-    display: none;
-    cursor: pointer;
+  display: none;
+  cursor: pointer;
 }
 
 @media (max-width: 659px) {
-    .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 var(--space-medium);
-        position: relative;
-    }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 var(--space-medium);
+    position: relative;
+  }
 
-    .logo_Full {
-        display: flex;
-        position: absolute;
-        right: var(--space-extra-large);
-        top: var(--space-extra-large);
-        margin-right: 0;
-    }
+  .logo_Full {
+    display: flex;
+    position: absolute;
+    right: var(--space-extra-large);
+    top: var(--space-extra-large);
+    margin-right: 0;
+  }
 
-    .hamburger {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: transparent;
-        color:var(--green);
-        border: none;
-        cursor: pointer;
-    }
+  .hamburger {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    color: var(--green);
+    border: none;
+    cursor: pointer;
+  }
 
-    .links {
-        display: none;
-        flex-direction: column;
-        align-items: start;
-        position: absolute;
-        top: var(--space-xxxlarge);
-        left: var(--space-medium);
-        background-color: var(--white);
-        box-shadow: var(--shadow);
-        padding: var(--space-medium);
-        gap: var(--space-small);
-        z-index: 1000;
-    }
+  .links {
+    display: none;
+    flex-direction: column;
+    align-items: start;
+    position: absolute;
+    top: var(--space-xxxlarge);
+    left: var(--space-medium);
+    background-color: var(--white);
+    box-shadow: var(--shadow);
+    padding: var(--space-medium);
+    gap: var(--space-small);
+    z-index: 1000;
+  }
 
-    .links.open {
-        display: flex;
-    }
+  .links.open {
+    display: flex;
+  }
+}
+
+.welcomeText {
+  font-size: 1.5rem;
+  margin-right: auto;
+  color: white;
+}
+
+.userActions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-medium);
+}
+
+.userName {
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+}
+
+.logoutButton {
+  background-color: white;
+  color: #004d61;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: bold;
+}
+
+.logoutButton:hover {
+  background-color: #004d61;
+  color: white;
 }
