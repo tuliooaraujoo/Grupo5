@@ -1,21 +1,43 @@
-import TextField from "@/components/Inputs/TextField"
-import Button from "@/components/Button"
-import SelectorField from "@/components/Inputs/SelectorField"
+import TextField from "@/components/Inputs/TextField";
+import Button from "@/components/Button";
+import SelectorField from "@/components/Inputs/SelectorField";
+import Image from "next/image";
+import transaction from "../../../../public/images/illustrations/transaction.svg";
 
 const FormTransaction = () => {
-
     return (
-        <form className="flex flex-col gap-8 w-2/4 p-8 h-1/2  bg-background bg-no-repeat rounded-lg">
-            <h4 className="text-xl font-bold my-8">Nova Transação</h4>
-            <SelectorField />
-            <TextField
-                id="Value"
-                placeholder="R$ 00,00"
-                className="w-60"
-            />
-            <Button text="Acessar" className="bg-blue text-white w-60" onClick={() => { }} />
+        <form
+            className="relative bg-background bg-cover bg-no-repeat rounded-lg grid gap-4 grid-cols-2 grid-rows-[auto_auto_auto_auto_1fr] w-2/3 p-8 max-sm:gap-2 max-sm:flex max-sm:flex-col max-sm:items-center"
+        >
+            <h4 className="text-xl font-bold max-sm:text-center col-span-2">
+                Nova Transação
+            </h4>
+            <div className="col-span-2">
+                <SelectorField />
+            </div>
+            <div className="col-start-1">
+                <TextField
+                    id="Value"
+                    placeholder="R$ 00,00"
+                    className="lg:border lg:border-blue lg:focus:outline-blue md:border md:border-blue md:focus:outline-blue max-sm:border max-sm:border-blue max-sm:focus:outline-blue w-4/5 max-sm:w-full"
+                />
+            </div>
+            <div className="col-start-1">
+                <Button
+                    text="Concluir Transação"
+                    className="bg-blue text-white w-4/5"
+                    onClick={() => { }}
+                />
+            </div>
+            <div className="row-start-4 row-span-2 col-start-2 flex justify-end items-end">
+                <Image
+                    src={transaction}
+                    alt="Ilustração de uma pessoa segurando um cartão gigante"
+                    className="lg:hidden md:w-full max-sm:w-96 max-sm:mt-8"
+                />
+            </div>
         </form>
-    )
-}
+    );
+};
 
-export default FormTransaction
+export default FormTransaction;
