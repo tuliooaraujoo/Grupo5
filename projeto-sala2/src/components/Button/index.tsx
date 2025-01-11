@@ -1,5 +1,7 @@
+import React from "react";
+
 export interface ButtonProps {
-    text:string;
+    text:string | React.ReactNode;
     onClick: () => void;
     className: string;
 }

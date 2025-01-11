@@ -9,7 +9,7 @@ interface TextFieldProps {
 
 const TextField = ({ id, className, placeholder, value, onChange, error }: TextFieldProps) => {
     return (
-        <div className="flex flex-col mb-6">
+        <div className="flex flex-col">
             <label className="mb-2 font-bold" htmlFor={id}>{id}</label>
             <input
                 type={id === "Senha" ? "password" : "text"}
