@@ -11,7 +11,7 @@ const FormLogin = () => {
     ]
 
     return (
-        <form className="flex flex-col w-3/4">
+        <form className="flex flex-col w-3/4 gap-8">
             <Image
                 src={login}
                 alt="Ilustração de uma pessoa ao lado de um celular gigante"

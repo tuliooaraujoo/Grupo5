@@ -32,7 +32,7 @@ const FormRegister = () => {
             <CheckboxField
                 id="terms"
                 label="Li e estou ciente quanto às condições de tratamento dos meus dados conforme descrito na Política de Privacidade do banco."
-                checked={false}
+                checked
                 />
             <Button text="Criar conta" className="bg-orange text-white w-36 self-center" onClick={() => {}} />
         </form>
