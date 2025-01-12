@@ -20,7 +20,7 @@ const contacts: LinksProps[] = [
 
 const Footer = () => {
     return (
-        <footer className="bg-black text-white py-16 px-8 flex justify-around max-sm:flex-col max-sm:gap-8">
+        <footer className="bg-black text-white py-16 px-8 flex justify-around flex-wrap gap-8">
             <div className="w-56 flex flex-col gap-4">
                 <h4 className="font-bold">Serviços</h4>
                 {services.map((service, index) => (

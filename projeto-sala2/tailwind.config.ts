@@ -9,7 +9,8 @@ export default {
   theme: {
     extend: {
       backgroundImage: {
-        'background': "url('/images/background.svg')"
+        'background': "url('/images/background.svg')",
+        'custom-gradient': 'linear-gradient(180deg, rgba(0, 77, 97, 1) 0%, rgba(255, 255, 255, 1) 100%)',
       },
       colors: {
         green: '#47A138',
