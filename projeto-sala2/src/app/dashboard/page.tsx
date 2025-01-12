@@ -1,14 +1,11 @@
 "use client"
 
-import Main from "@/components/Main"
-import { ModalProvider } from "@/context/ModalContext"
+import Investments from "@/components/Investments"
 
 export default function Home() {
   return (
     <div>
-      <ModalProvider>
-        <Main />
-      </ModalProvider>
+<Investments/>
     </div>
   )
 }
