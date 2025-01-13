@@ -13,7 +13,7 @@ const AccountSettings = () => {
     ];
 
     return (
-        <div className="bg-background w-2/3 h-1/3 rounded-lg flex flex-col p-12">
+        <div className="bg-background bg-cover rounded-lg flex flex-col p-12">
             <h2 className="text-2xl font-bold">Configurações de conta</h2>
             <div className="flex flex-col lg:flex-row-reverse gap-8 justify-end">
                 <form className="w-full lg:w-2/3">

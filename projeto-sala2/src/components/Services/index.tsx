@@ -30,9 +30,9 @@ const Services = () => {
     ]
 
     return (
-        <div className="bg-background bg-cover rounded-lg w-3/5 p-8">
+        <div className="bg-background bg-cover rounded-lg p-8">
             <h2 className="text-xl font-bold text-center mb-8">Confira os serviços disponíveis</h2>
-            <div className="flex flex-wrap justify-center gap-7">
+            <div className="flex flex-wrap justify-center gap-4">
                 {services.map((service, index) => (
                     <ServiceBox
                         key={index}

@@ -16,16 +16,16 @@ const Menu = ({ setActiveComponent }: MenuProps) => {
     };
 
     return (
-        <div className="bg-lightgray rounded-lg p-6 flex flex-col items-start w-full">
+        <div className="bg-lightgray rounded-lg p-6 flex flex-col items-start max-md:flex-row max-sm:hidden">
             {options.map((option) => (
-                <div key={option} className="w-full">
+                <div key={option} className="w-full justify-center">
                     <Button
                         text={option}
                         onClick={() => handleOptionClick(option)}
-                        className={`w-full text-left p-2 ${activeOption === option ? "font-bold text-green" : "text-black"
+                        className={`text-left p-2 ${activeOption === option ? "font-bold text-green" : "text-black"
                             }`}
                     />
-                        <div className="border-b border-darkgray mt-2 w-full" />
+                        <div className="border-b border-darkgray mt-2 w-full max-md:hidden" />
                 </div>
             ))}
         </div>

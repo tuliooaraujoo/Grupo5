@@ -24,23 +24,23 @@ const Cards = () => {
     ];
 
     return (
-        <section className="font-principal flex flex-col items-center gap-6 bg-background bg-cover bg-no-repeat w-[690px] h-auto p-8">
+        <section className="flex flex-col items-center gap-6 bg-background bg-cover rounded-lg p-8">
             <h2 className="text-2xl font-bold">Meus cartões</h2>
             {cards.map((card, index) => (
                 <div key={index}>
                     <p className="mb-6 max-md:text-center">{card.type}</p>
-                    <div className="flex gap-6 items-center max-sm:flex-col">
-                        <Image src={card.image} alt={card.type} width={327} height={164} />
+                    <div className="flex gap-6 items-center max-md:flex-col">
+                        <Image src={card.image} alt={card.type} width={327} height={164} className="max-lg:w-[237px]"/>
                         <div className="flex flex-col items-center gap-6">
                             <Button
                                 text="Configurar"
                                 onClick={() => { }}
-                                className="bg-orange text-white border-none w-[250px]"
+                                className="bg-orange text-white border-none w-[200px]"
                             />
                             <Button
                                 text="Bloquear"
                                 onClick={() => { }}
-                                className="bg-transparent text-red-500 border border-red-500 w-[250px]"
+                                className="bg-transparent text-red-500 border border-red-500 w-[200px]"
                             />
                             <span>Função: {card.function}</span>
                         </div>

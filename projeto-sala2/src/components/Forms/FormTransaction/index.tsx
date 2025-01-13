@@ -18,9 +18,8 @@ const FormTransaction: FC = () => {
   } = useTransaction();
 
   return (
-    <div className="flex flex-col items-center w-full">
       <form
-        className="relative bg-background bg-cover bg-no-repeat rounded-lg grid gap-4 grid-cols-2 grid-rows-[auto_auto_auto_auto_1fr] w-2/3 p-8 max-sm:gap-2 max-sm:flex max-sm:flex-col max-sm:items-center"
+        className="relative bg-background bg-cover rounded-lg grid gap-4 grid-cols-2 grid-rows-5 p-8  max-sm:flex max-sm:flex-col max-sm:items-center max-sm:gap-2"
       >
         <h4 className="text-xl font-bold max-sm:text-center col-span-2">
           Nova Transação
@@ -57,7 +56,6 @@ const FormTransaction: FC = () => {
           />
         </div>
       </form>
-    </div>
   );
 };
 
