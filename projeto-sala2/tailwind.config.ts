@@ -10,6 +10,7 @@ export default {
     extend: {
       backgroundImage: {
         'background': "url('/images/background.svg')",
+        'backgroundBlue': "url('/images/background_blue.svg')",
         'custom-gradient': 'linear-gradient(180deg, rgba(0, 77, 97, 1) 0%, rgba(255, 255, 255, 1) 100%)',
       },
       colors: {
