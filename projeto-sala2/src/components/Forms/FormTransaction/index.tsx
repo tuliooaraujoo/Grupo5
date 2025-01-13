@@ -1,4 +1,3 @@
-import { FC } from "react";
 import TextField from "@/components/Inputs/TextField";
 import Button from "@/components/Button";
 import SelectorField from "@/components/Inputs/SelectorField";
@@ -6,7 +5,7 @@ import Image from "next/image";
 import transaction from "../../../../public/images/illustrations/transaction.svg";
 import useTransaction from "@/hooks/useTransaction";
 
-const FormTransaction: FC = () => {
+const FormTransaction = () => {
   const {
     transactionType,
     setTransactionType,
