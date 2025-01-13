@@ -18,7 +18,7 @@ interface ExtratoProps {
 const Extract = ({ transactions, onEdit, onDelete }: ExtratoProps) => {
 
   return (
-    <div className="bg-white p-12 rounded-lg">
+    <div className="bg-white p-6 rounded-lg">
       <h3 className="text-2xl font-bold">Extrato</h3>
       <div>
         {transactions.length === 0 ? (

@@ -1,20 +1,5 @@
 {
-  "transactions": [
-    {
-      "id": "b23e",
-      "type": "depósito",
-      "value": 80,
-      "date": "13/1/2025",
-      "month": "Janeiro"
-    },
-    {
-      "id": "3fc9",
-      "type": "depósito",
-      "value": 50,
-      "date": "13/1/2025",
-      "month": "Janeiro"
-    }
-  ],
+  "transactions": [],
   "balance": {
     "amount": 2580
   }

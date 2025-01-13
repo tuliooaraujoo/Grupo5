@@ -4,9 +4,11 @@ import Account from '@/components/Account';
 import AccountSettings from '@/components/AccountSettings';
 import Cards from '@/components/Cards';
 import Extract from '@/components/Extract';
+import FormTransaction from '@/components/Forms/FormTransaction';
 import Header from '@/components/Header/InitialHeader';
 import Investments from '@/components/Investments';
 import Menu from '@/components/Menu';
+import Services from '@/components/Services';
 import { ModalProvider } from '@/context/ModalContext';
 import useTransaction from '@/hooks/useTransaction';
 import { useState } from 'react';
@@ -18,36 +20,73 @@ const Dashboard = () => {
 
     const renderComponent = () => {
         switch (activeComponent) {
-            case 'Investments':
-                return <Investments />;
-            case 'AccountSettings':
-                return <AccountSettings />;
-            case 'Cards':
-            default:
-                return <Cards />;
+            case "Inicial":
+            default: return (
+                <div className="grid grid-cols-3 grid-rows-2 gap-6">
+                    <Menu setActiveComponent={setActiveComponent} />
+                    <Account saldo={balance} />
+                    <Extract
+                        transactions={transactionHistory}
+                        onEdit={handleEditTransaction}
+                        onDelete={handleDeleteTransaction}
+                    />
+                    <FormTransaction />
+                </div>
+            )
+            case 'Investimentos':
+                return (
+                    <div>
+                        <Menu setActiveComponent={setActiveComponent} />
+                        <Account saldo={balance} />
+                        <Investments />
+                        <Extract
+                            transactions={transactionHistory}
+                            onEdit={handleEditTransaction}
+                            onDelete={handleDeleteTransaction}
+                        />
+                    </div>
+                )
+            case 'Cartões':
+                return (
+                    <div>
+                        <Menu setActiveComponent={setActiveComponent} />
+                        <Account saldo={balance} />
+                        <Cards />
+                        <Extract
+                            transactions={transactionHistory}
+                            onEdit={handleEditTransaction}
+                            onDelete={handleDeleteTransaction}
+                        />
+                    </div>
+                )
+            case 'Serviços':
+                return (
+                    <div>
+                        <Menu setActiveComponent={setActiveComponent} />
+                        <Account saldo={balance} />
+                        <Services />
+                        <Extract
+                            transactions={transactionHistory}
+                            onEdit={handleEditTransaction}
+                            onDelete={handleDeleteTransaction}
+                        />
+                    </div>
+                )
+            case 'Configurações':
+                return (
+                    <div>
+                        <Menu setActiveComponent={setActiveComponent} />
+                        <AccountSettings />
+                    </div>
+                )
         }
     };
 
     return (
         <ModalProvider>
             <Header />
-            <div className="grid grid-cols-3 grid-rows-4 gap-4">
-                <div className="col-start-1 row-start-2">
-                    <Menu setActiveComponent={setActiveComponent} />
-                </div>
-                <div className="col-span-1 row-span-1 row-start-2" >
-                    <Account saldo={balance} />
-                </div>
-                <div className="col-span-1 row-span-4 row-start-1">
-                    <Extract
-                        transactions={transactionHistory}
-                        onEdit={handleEditTransaction}
-                        onDelete={handleDeleteTransaction}
-                    />
-                </div>
-                <div className="variable-component col-span-1 row-span-1 row-start-3">
-                    {renderComponent()}
-                </div>
+            <div className="bg-gray p-6">
+                {renderComponent()}
             </div>
 
         </ModalProvider>

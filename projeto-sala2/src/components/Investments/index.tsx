@@ -22,7 +22,7 @@ const Investments = () => {
   const totalInvestido = rendaFixa + rendaVariavel;
 
   return (
-    <div className="flex flex-col bg-background bg-cover max-w-[690px] rounded-lg gap-4 p-10">
+    <div className="flex flex-col bg-background bg-cover rounded-lg gap-4 p-10">
       <h2 className="font-bold text-2xl text-black">Investimentos</h2>
       <h3 className="text-2xl text-blue">Total: R${totalInvestido.toLocaleString()}</h3>
       <div className="flex flex-wrap justify-around mb-14 gap-8">

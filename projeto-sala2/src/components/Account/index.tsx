@@ -13,12 +13,12 @@ const Account = ({ saldo }: { saldo: number }) => {
     formattedDate = formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
 
     return (
-        <div className=" grid grid-cols-2 grid-rows-2 bg-backgroundBlue bg-cover bg-no-repeat rounded-lg gap-4 w-2/3 p-8 max-sm:gap-2 max-sm:flex max-sm:flex-col max-sm:items-center text-white">
+        <div className=" grid grid-cols-2 grid-rows-2 bg-backgroundBlue bg-cover bg-no-repeat rounded-lg p-8 max-sm:gap-2 max-sm:flex max-sm:flex-col max-sm:items-center text-white">
             <div className="col-start-1 row-start-1">
                 <h1 className="font-semibold text-2xl mb-6">Olá, Joana :)!</h1>
                 <span className="text-xs">{formattedDate}</span>
             </div>
-            <div className="col-start-2 row-start-1">
+            <div className="col-start-2 row-start-1 mt-24">
                 <Balance saldo={saldo} />
             </div>
             <Image
