@@ -9,8 +9,8 @@ interface SelectorFieldProps {
         name="transacao"
         id="transacao"
         className="border border-blue text-base rounded-lg p-3.5 focus-blue w-4/5 max-sm:w-full"
-        onChange={onChange} // O evento onChange agora é aceito
-        value={value} // O valor da seleção é controlado pelo estado `transactionType`
+        onChange={onChange}
+        value={value}
       >
         <option value="" disabled>
           Selecione uma transação

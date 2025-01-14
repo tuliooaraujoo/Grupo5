@@ -26,7 +26,7 @@ const useBalance = () => {
     }
   };
 
-  return { balance, updateBalanceState, setBalance };
+  return { balance, updateBalanceState};
 };
 
 export default useBalance;

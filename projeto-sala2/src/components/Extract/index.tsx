@@ -1,13 +1,6 @@
 import Button from "@/components/Button";
 import { MdDelete, MdEdit } from "react-icons/md";
-
-interface Transaction {
-  id?: number;
-  type: "depósito" | "transferência";
-  value: number;
-  date: string;
-  month: string;
-}
+import { Transaction } from "@/interfaces/transaction";
 
 interface ExtratoProps {
   transactions: Transaction[];

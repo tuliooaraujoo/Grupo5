@@ -1,6 +1,14 @@
 {
-  "transactions": [],
+  "transactions": [
+    {
+      "id": "87d1",
+      "type": "transferência",
+      "value": 50,
+      "date": "14/1/2025",
+      "month": "Janeiro"
+    }
+  ],
   "balance": {
-    "amount": 2580
+    "amount": 2530
   }
 }

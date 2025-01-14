@@ -6,14 +6,8 @@ import {
   updateTransaction,
 } from "@/api/transaction";
 import useBalance from "./useBalance";
-
-interface Transaction {
-  id?: number;
-  type: "depósito" | "transferência";
-  value: number;
-  date: string;
-  month: string;
-}
+import { Transaction } from "@/interfaces/transaction";
+import { formatDate } from "@/utils/DateFormatter";
 
 const useTransaction = () => {
   const { balance, updateBalanceState} = useBalance();
@@ -34,28 +28,6 @@ const useTransaction = () => {
 
     fetchTransactions();
   }, []);
-
-  const formatDate = (date: Date) => {
-    const day = String(date.getDate()).padStart(2, "0");
-    const monthIndex = date.getMonth();
-    const year = date.getFullYear();
-    const monthNames = [
-      "Janeiro",
-      "Fevereiro",
-      "Março",
-      "Abril",
-      "Maio",
-      "Junho",
-      "Julho",
-      "Agosto",
-      "Setembro",
-      "Outubro",
-      "Novembro",
-      "Dezembro",
-    ];
-    const month = monthNames[monthIndex];
-    return { formattedDate: `${day}/${monthIndex + 1}/${year}`, month };
-  };
 
   const handleTransaction = async () => {
     const value = parseFloat(amount.replace("R$", "").replace(",", "."));
