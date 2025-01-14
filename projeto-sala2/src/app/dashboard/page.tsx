@@ -11,6 +11,7 @@ import Investments from "@/components/Investments";
 import Menu from "@/components/Menu";
 import Services from "@/components/Services";
 import { ModalProvider } from "@/context/ModalContext";
+import useBalance from "@/hooks/useBalance";
 import useTransaction from "@/hooks/useTransaction";
 import { useState } from "react";
 
@@ -18,7 +19,8 @@ const Dashboard = () => {
     const [activeComponent, setActiveComponent] = useState
         ('Investments');
 
-    const { balance, transactionHistory, handleDeleteTransaction, handleEditTransaction } = useTransaction();
+    const {transactionHistory, handleDeleteTransaction, handleEditTransaction } = useTransaction();
+    const {balance} = useBalance();
 
     const renderComponent = () => {
         const menu = <Menu setActiveComponent={setActiveComponent} />;

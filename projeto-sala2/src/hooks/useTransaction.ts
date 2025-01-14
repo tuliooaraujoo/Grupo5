@@ -1,5 +1,11 @@
-import { createTransaction, deleteTransaction, getBalance, getTransactions, updateBalance, updateTransaction } from "@/api/transaction";
 import { useState, useEffect } from "react";
+import {
+  createTransaction,
+  deleteTransaction,
+  getTransactions,
+  updateTransaction,
+} from "@/api/transaction";
+import useBalance from "./useBalance";
 
 interface Transaction {
   id?: number;
@@ -10,34 +16,43 @@ interface Transaction {
 }
 
 const useTransaction = () => {
-  const [balance, setBalance] = useState<number>(1000);
+  const { balance, updateBalanceState} = useBalance();
   const [transactionHistory, setTransactionHistory] = useState<Transaction[]>([]);
   const [transactionType, setTransactionType] = useState<"depósito" | "transferência">("depósito");
-  const [amount, setAmount] = useState<string>("");  
+  const [amount, setAmount] = useState<string>("");
   const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchTransactions = async () => {
       try {
-        const balanceData = await getBalance();
-        setBalance(balanceData);
-
         const transactionsData = await getTransactions();
         setTransactionHistory(transactionsData);
       } catch (error) {
-        console.error("Erro ao carregar dados:", error);
+        console.error("Erro ao carregar transações:", error);
       }
     };
 
-    fetchData();
+    fetchTransactions();
   }, []);
 
   const formatDate = (date: Date) => {
     const day = String(date.getDate()).padStart(2, "0");
-    const monthIndex = date.getMonth(); 
+    const monthIndex = date.getMonth();
     const year = date.getFullYear();
-    const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", 
-      "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+    const monthNames = [
+      "Janeiro",
+      "Fevereiro",
+      "Março",
+      "Abril",
+      "Maio",
+      "Junho",
+      "Julho",
+      "Agosto",
+      "Setembro",
+      "Outubro",
+      "Novembro",
+      "Dezembro",
+    ];
     const month = monthNames[monthIndex];
     return { formattedDate: `${day}/${monthIndex + 1}/${year}`, month };
   };
@@ -56,12 +71,12 @@ const useTransaction = () => {
       type: transactionType,
       value,
       date: formattedDate,
-      month: month,
+      month,
     };
 
     try {
       let updatedBalance = balance;
-  
+
       if (transactionType === "depósito") {
         updatedBalance += value;
       } else if (transactionType === "transferência") {
@@ -71,11 +86,10 @@ const useTransaction = () => {
         }
         updatedBalance -= value;
       }
-  
-      await updateBalance(updatedBalance);
+
+      await updateBalanceState(updatedBalance);
       const transactionResponse = await createTransaction(newTransaction);
-  
-      setBalance(updatedBalance);
+
       setTransactionHistory((prevState) => [
         ...prevState,
         { ...newTransaction, id: transactionResponse.id },
@@ -83,7 +97,7 @@ const useTransaction = () => {
     } catch (error) {
       console.error("Erro ao processar transação:", error);
     }
-  
+
     setAmount("");
   };
 
@@ -114,7 +128,7 @@ const useTransaction = () => {
         );
 
         const updatedBalance = balance - (editingTransaction.value - value);
-        setBalance(updatedBalance);
+        updateBalanceState(updatedBalance);
 
         setEditingTransaction(null);
         setAmount("");
@@ -127,7 +141,7 @@ const useTransaction = () => {
   const handleDeleteTransaction = async (transactionId: number) => {
     try {
       await deleteTransaction(transactionId);
-  
+
       const deletedTransaction = transactionHistory.find(
         (transaction) => transaction.id === transactionId
       );
@@ -136,9 +150,9 @@ const useTransaction = () => {
           deletedTransaction.type === "depósito"
             ? balance - deletedTransaction.value
             : balance + deletedTransaction.value;
-        setBalance(updatedBalance);
+        updateBalanceState(updatedBalance);
       }
-  
+
       setTransactionHistory((prevState) =>
         prevState.filter((transaction) => transaction.id !== transactionId)
       );
@@ -148,7 +162,6 @@ const useTransaction = () => {
   };
 
   return {
-    balance,
     transactionHistory,
     transactionType,
     setTransactionType,
@@ -158,7 +171,7 @@ const useTransaction = () => {
     handleTransaction,
     handleEditTransaction,
     handleSaveEdit,
-    handleDeleteTransaction
+    handleDeleteTransaction,
   };
 };
 

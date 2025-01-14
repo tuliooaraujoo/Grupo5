@@ -39,15 +39,18 @@ const Extract = ({ transactions, onEdit, onDelete }: ExtratoProps) => {
                       R$ {transaction.value}
                     </div>
                     <div className="row-start-2 col-start-3 text-sm text-placeholder">
-                    {transaction.date}
+                      {transaction.date}
                     </div>
                     <div className="row-start-3 col-start-3 flex justify-center gap-4 text-green">
                       <Button
                         text={<MdEdit size={20} />}
-                        onClick={() => onEdit(transaction)}
+                        onClick={() => {
+                          console.log("Editar clicado:", transaction);
+                          onEdit(transaction);
+                        }}
                       />
                       <Button
-                        text={<MdDelete size={20}/>}
+                        text={<MdDelete size={20} />}
                         onClick={() => transaction.id && onDelete(transaction.id)}
                       />
                     </div>
