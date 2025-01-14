@@ -1,8 +1,13 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { getBalance, updateBalance } from "@/api/balance";
+import { useBalanceContext } from "@/context/BalanceContext";
 
 const useBalance = () => {
-  const [balance, setBalance] = useState<number>(1000);
+
+  const {
+    balance,
+    setBalance
+  } = useBalanceContext();
 
   useEffect(() => {
     const fetchBalance = async () => {
@@ -15,7 +20,7 @@ const useBalance = () => {
     };
 
     fetchBalance();
-  }, []);
+  }, [setBalance]);
 
   const updateBalanceState = async (newBalance: number) => {
     try {
@@ -26,7 +31,7 @@ const useBalance = () => {
     }
   };
 
-  return { balance, updateBalanceState};
+  return { balance, updateBalanceState };
 };
 
 export default useBalance;

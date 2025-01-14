@@ -10,13 +10,14 @@ import AccountHeader from "@/components/Header/AccountHeader";
 import Investments from "@/components/Investments";
 import Menu from "@/components/Menu";
 import Services from "@/components/Services";
+import { BalanceProvider } from "@/context/BalanceContext";
 import { TransactionProvider } from "@/context/TransactionContext";
 import useBalance from "@/hooks/useBalance";
 import useTransaction from "@/hooks/useTransaction";
 import { useState } from "react";
 
-const DashboardContent = ({ activeComponent, setActiveComponent }: { 
-    activeComponent: string; 
+const DashboardContent = ({ activeComponent, setActiveComponent }: {
+    activeComponent: string;
     setActiveComponent: React.Dispatch<React.SetStateAction<string>>;
 }) => {
     const { transactionHistory, handleDeleteTransaction, handleEditTransaction } = useTransaction();
@@ -73,9 +74,9 @@ const DashboardContent = ({ activeComponent, setActiveComponent }: {
                 );
             case "Configurações":
                 return (
-                    <div className="grid grid-cols-6 grid-rows-1 gap-6 max-md:flex max-md:flex-col">
-                        <div className="col-start-1 col-end-1 row-start-1">{menu}</div>
-                        <div className="col-start-2 col-end-6 row-start-1">
+                    <div className="grid grid-cols-6 grid-rows-1 gap-6 max-lg:flex max-lg:flex-col">
+                        <div className="col-start-1 col-end-1">{menu}</div>
+                        <div className="col-start-2 col-end-6">
                             <AccountSettings />
                         </div>
                     </div>
@@ -83,7 +84,7 @@ const DashboardContent = ({ activeComponent, setActiveComponent }: {
         }
     };
 
-    return <div className="bg-gray p-6">{renderComponent()}</div>;
+    return <div className="h-full bg-gray p-6">{renderComponent()}</div>;
 };
 
 const Dashboard = () => {
@@ -91,11 +92,13 @@ const Dashboard = () => {
 
     return (
         <TransactionProvider>
-            <AccountHeader setActiveComponent={setActiveComponent} />
-            <DashboardContent 
-                activeComponent={activeComponent} 
-                setActiveComponent={setActiveComponent} 
-            />
+            <BalanceProvider>
+                <AccountHeader setActiveComponent={setActiveComponent} />
+                <DashboardContent
+                    activeComponent={activeComponent}
+                    setActiveComponent={setActiveComponent}
+                />
+            </BalanceProvider>
         </TransactionProvider>
     );
 };

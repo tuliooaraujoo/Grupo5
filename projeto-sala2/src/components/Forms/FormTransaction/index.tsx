@@ -20,7 +20,7 @@ const FormTransaction = () => {
       <form
         className="relative bg-background bg-cover rounded-lg grid gap-4 grid-cols-2 grid-rows-5 p-8  max-sm:flex max-sm:flex-col max-sm:items-center max-sm:gap-2"
       >
-        <h4 className="text-xl font-bold max-sm:text-center col-span-2">
+        <h4 className="text-xl font-bold max-sm:text-center">
           Nova Transação
         </h4>
         <div className="col-span-2">

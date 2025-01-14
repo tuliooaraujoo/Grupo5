@@ -16,7 +16,7 @@ const Menu = ({ setActiveComponent }: MenuProps) => {
     };
 
     return (
-        <div className="bg-lightgray rounded-lg p-6 flex flex-col items-start max-md:flex-row max-sm:hidden">
+        <div className="bg-lightgray rounded-lg p-6 flex flex-col items-start max-lg:flex-row max-sm:hidden">
             {options.map((option) => (
                 <div key={option} className="w-full justify-center">
                     <Button
@@ -25,7 +25,7 @@ const Menu = ({ setActiveComponent }: MenuProps) => {
                         className={`text-left p-2 ${activeOption === option ? "font-bold text-green" : "text-black"
                             }`}
                     />
-                        <div className="border-b border-darkgray mt-2 w-full max-md:hidden" />
+                        <div className="border-b border-darkgray mt-2 w-full max-lg:hidden" />
                 </div>
             ))}
         </div>
