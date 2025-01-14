@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Account from "@/components/Account";
 import AccountSettings from "@/components/AccountSettings";
@@ -10,17 +10,17 @@ import AccountHeader from "@/components/Header/AccountHeader";
 import Investments from "@/components/Investments";
 import Menu from "@/components/Menu";
 import Services from "@/components/Services";
-import { ModalProvider } from "@/context/ModalContext";
+import { TransactionProvider } from "@/context/TransactionContext";
 import useBalance from "@/hooks/useBalance";
 import useTransaction from "@/hooks/useTransaction";
 import { useState } from "react";
 
-const Dashboard = () => {
-    const [activeComponent, setActiveComponent] = useState
-        ('Investments');
-
-    const {transactionHistory, handleDeleteTransaction, handleEditTransaction } = useTransaction();
-    const {balance} = useBalance();
+const DashboardContent = ({ activeComponent, setActiveComponent }: { 
+    activeComponent: string; 
+    setActiveComponent: React.Dispatch<React.SetStateAction<string>>;
+}) => {
+    const { transactionHistory, handleDeleteTransaction, handleEditTransaction } = useTransaction();
+    const { balance } = useBalance();
 
     const renderComponent = () => {
         const menu = <Menu setActiveComponent={setActiveComponent} />;
@@ -44,7 +44,7 @@ const Dashboard = () => {
                         extract={extract}
                     />
                 );
-            case 'Investimentos':
+            case "Investimentos":
                 return (
                     <DashboardLayout
                         menu={menu}
@@ -53,7 +53,7 @@ const Dashboard = () => {
                         extract={extract}
                     />
                 );
-            case 'Cartões':
+            case "Cartões":
                 return (
                     <DashboardLayout
                         menu={menu}
@@ -62,7 +62,7 @@ const Dashboard = () => {
                         extract={extract}
                     />
                 );
-            case 'Serviços':
+            case "Serviços":
                 return (
                     <DashboardLayout
                         menu={menu}
@@ -71,12 +71,10 @@ const Dashboard = () => {
                         extract={extract}
                     />
                 );
-            case 'Configurações':
+            case "Configurações":
                 return (
                     <div className="grid grid-cols-6 grid-rows-1 gap-6 max-md:flex max-md:flex-col">
-                        <div className="col-start-1 col-end-1 row-start-1">
-                            {menu}
-                        </div>
+                        <div className="col-start-1 col-end-1 row-start-1">{menu}</div>
                         <div className="col-start-2 col-end-6 row-start-1">
                             <AccountSettings />
                         </div>
@@ -85,13 +83,20 @@ const Dashboard = () => {
         }
     };
 
+    return <div className="bg-gray p-6">{renderComponent()}</div>;
+};
+
+const Dashboard = () => {
+    const [activeComponent, setActiveComponent] = useState('Inicial');
+
     return (
-        <ModalProvider>
+        <TransactionProvider>
             <AccountHeader setActiveComponent={setActiveComponent} />
-            <div className="bg-gray p-6">
-                {renderComponent()}
-            </div>
-        </ModalProvider>
+            <DashboardContent 
+                activeComponent={activeComponent} 
+                setActiveComponent={setActiveComponent} 
+            />
+        </TransactionProvider>
     );
 };
 

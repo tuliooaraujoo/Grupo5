@@ -1,20 +1,24 @@
-import { useState, useEffect } from "react";
-import {
-  createTransaction,
-  deleteTransaction,
-  getTransactions,
-  updateTransaction,
-} from "@/api/transaction";
+import { useEffect } from "react";
+import {createTransaction,deleteTransaction,getTransactions, updateTransaction} from "@/api/transaction";
 import useBalance from "./useBalance";
 import { Transaction } from "@/interfaces/transaction";
 import { formatDate } from "@/utils/DateFormatter";
+import { useTransactionContext } from "@/context/TransactionContext";
 
 const useTransaction = () => {
-  const { balance, updateBalanceState} = useBalance();
-  const [transactionHistory, setTransactionHistory] = useState<Transaction[]>([]);
-  const [transactionType, setTransactionType] = useState<"depósito" | "transferência">("depósito");
-  const [amount, setAmount] = useState<string>("");
-  const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null);
+  
+  const {
+    transactionHistory,
+    setTransactionHistory,
+    transactionType,
+    setTransactionType,
+    amount,
+    setAmount,
+    editingTransaction,
+    setEditingTransaction,
+  } = useTransactionContext();
+
+  const { balance, updateBalanceState } = useBalance();
 
   useEffect(() => {
     const fetchTransactions = async () => {
@@ -27,7 +31,7 @@ const useTransaction = () => {
     };
 
     fetchTransactions();
-  }, []);
+  }, [setTransactionHistory]);
 
   const handleTransaction = async () => {
     const value = parseFloat(amount.replace("R$", "").replace(",", "."));

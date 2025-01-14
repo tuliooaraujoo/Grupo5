@@ -7,7 +7,7 @@ interface DashboardLayoutProps {
 
 const DashboardLayout = ({ menu, account, mainContent, extract }: DashboardLayoutProps) => {
     return (
-        <div className="grid grid-cols-6 gap-6 max-md:flex max-md:flex-col">
+        <div className="grid grid-cols-6 grid-rows-2 gap-6 max-md:flex max-md:flex-col">
             <div className="col-start-1 col-end-1">
                 {menu}
             </div>
