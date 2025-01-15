@@ -1,12 +1,16 @@
 import { useEffect } from "react";
-import {createTransaction,deleteTransaction,getTransactions, updateTransaction} from "@/api/transaction";
-import useBalance from "./useBalance";
+import {
+  createTransaction,
+  deleteTransaction,
+  getTransactions,
+  updateTransaction,
+} from "@/api/services/transaction";
 import { Transaction } from "@/interfaces/transaction";
 import { useTransactionContext } from "@/context/TransactionContext";
 import { formatDate } from "@/utils/formatters";
+import useAccount from "./useAccount";
 
 const useTransaction = () => {
-  
   const {
     transactionHistory,
     setTransactionHistory,
@@ -18,7 +22,7 @@ const useTransaction = () => {
     setEditingTransaction,
   } = useTransactionContext();
 
-  const { balance, updateBalanceState } = useBalance();
+  const { account, updateAccountState } = useAccount();
 
   useEffect(() => {
     const fetchTransactions = async () => {
@@ -51,19 +55,21 @@ const useTransaction = () => {
     };
 
     try {
-      let updatedBalance = balance;
+      let updatedBalance = account.balance;
 
       if (transactionType === "depósito") {
         updatedBalance += value;
       } else if (transactionType === "transferência") {
-        if (value > balance) {
+        if (value > account.balance) {
           alert("Saldo insuficiente para transferência.");
           return;
         }
         updatedBalance -= value;
       }
 
-      await updateBalanceState(updatedBalance);
+      const updatedAccount = { ...account, balance: updatedBalance };
+      await updateAccountState(updatedAccount);
+
       const transactionResponse = await createTransaction(newTransaction);
 
       setTransactionHistory((prevState) => [
@@ -82,7 +88,6 @@ const useTransaction = () => {
     setAmount(transaction.value.toFixed(2));
     setTransactionType(transaction.type);
   };
-  
 
   const handleSaveEdit = async () => {
     if (editingTransaction) {
@@ -91,30 +96,32 @@ const useTransaction = () => {
         alert("Por favor, insira um valor válido.");
         return;
       }
-  
+
       try {
         const updatedTransaction: Transaction = {
           ...editingTransaction,
           value,
           type: transactionType,
         };
-  
+
         await updateTransaction(editingTransaction.id!, updatedTransaction);
-  
+
         setTransactionHistory((prevState) =>
           prevState.map((transaction) =>
             transaction.id === editingTransaction.id ? updatedTransaction : transaction
           )
         );
 
-        const oldValue = editingTransaction.type === "depósito"
-          ? editingTransaction.value
-          : -editingTransaction.value;
+        const oldValue =
+          editingTransaction.type === "depósito"
+            ? editingTransaction.value
+            : -editingTransaction.value;
         const newValue = transactionType === "depósito" ? value : -value;
-  
-        const updatedBalance = balance + (newValue - oldValue);
-        updateBalanceState(updatedBalance);
-  
+
+        const updatedBalance = account.balance + (newValue - oldValue);
+        const updatedAccount = { ...account, balance: updatedBalance };
+        await updateAccountState(updatedAccount);
+
         setEditingTransaction(null);
         setAmount("");
       } catch (error) {
@@ -122,22 +129,24 @@ const useTransaction = () => {
       }
     }
   };
-  
 
   const handleDeleteTransaction = async (transactionId: number) => {
     try {
-      await deleteTransaction(transactionId);
-
       const deletedTransaction = transactionHistory.find(
         (transaction) => transaction.id === transactionId
       );
+
       if (deletedTransaction) {
         const updatedBalance =
           deletedTransaction.type === "depósito"
-            ? balance - deletedTransaction.value
-            : balance + deletedTransaction.value;
-        updateBalanceState(updatedBalance);
+            ? account.balance - deletedTransaction.value
+            : account.balance + deletedTransaction.value;
+
+        const updatedAccount = { ...account, balance: updatedBalance };
+        await updateAccountState(updatedAccount);
       }
+
+      await deleteTransaction(transactionId);
 
       setTransactionHistory((prevState) =>
         prevState.filter((transaction) => transaction.id !== transactionId)

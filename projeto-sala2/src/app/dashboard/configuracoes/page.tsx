@@ -1,6 +1,5 @@
 "use client";
 
-import { BalanceProvider } from "@/context/BalanceContext";
 import { TransactionProvider } from "@/context/TransactionContext";
 import Menu from "@/components/Menu";
 import AccountSettings from "@/components/AccountSettings";
@@ -22,9 +21,7 @@ const SettingsContent = () => {
 const SettingsLayout = () => {
     return (
         <TransactionProvider>
-            <BalanceProvider>
                 <SettingsContent />
-            </BalanceProvider>
         </TransactionProvider>
     );
 };

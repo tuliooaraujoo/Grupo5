@@ -1,14 +1,9 @@
 {
-  "transactions": [
-    {
-      "id": "3917",
-      "type": "depósito",
-      "value": 50,
-      "date": "15/1/2025",
-      "month": "Janeiro"
-    }
-  ],
-  "balance": {
-    "amount": 2050
+  "transactions": [],
+  "account": {
+    "fullName": "Joana da Silva Oliveira",
+    "firstName": "Joana",
+    "balance": 2500,
+    "currency": "R$"
   }
 }
