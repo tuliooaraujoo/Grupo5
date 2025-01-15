@@ -48,7 +48,7 @@ O design segue princípios consistentes baseados no **Material Design**, com aju
 - **Next.js**: Framework avançado para renderização híbrida e criação de aplicações otimizadas.
 
 ### **Estilização**
-- Estilos gerenciados com CSS-in-JS utilizando **Emotion** ou equivalente.
+- Estilos gerenciados com CSS-in-JS utilizando **Tailwind** ou equivalente.
 
 ### **Design System**
 - Baseado no protótipo do Figma, com definições de temas, fontes e componentes reutilizáveis.
