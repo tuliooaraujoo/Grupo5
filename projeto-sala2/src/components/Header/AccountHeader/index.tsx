@@ -1,19 +1,14 @@
 import { IoPersonCircleOutline } from "react-icons/io5";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
-import { useState } from "react";
 import Button from "@/components/Button";
 import Link from "next/link";
+import { normalizeText } from "@/utils/formatters";
+import { useMenu } from "@/hooks/useToogleMenu";
 
 const AccountHeader = () => {
-    const [menuOpen, setMenuOpen] = useState(false);
 
-    const toggleMenu = () => {
-        setMenuOpen(!menuOpen);
-    };
-
-    const normalizeText = (text: string) =>
-        text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-
+    const{menuOpen, toggleMenu} = useMenu();
+    const normalizedText = normalizeText;
     const options = ['Inicial', 'Investimentos', 'Cartões', 'Serviços', 'Configurações'];
 
     return (
@@ -35,7 +30,7 @@ const AccountHeader = () => {
                         {options.map((option) => (
                             <Link
                                 key={option}
-                                href={`/dashboard/${normalizeText(option)}`}
+                                href={`/dashboard/${normalizedText(option)}`}
                                 className="block w-full text-left py-2 px-4 hover:bg-gray"
                             >
                                 {option}

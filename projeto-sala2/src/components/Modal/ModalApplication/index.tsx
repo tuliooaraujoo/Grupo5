@@ -5,11 +5,7 @@ import { useModal } from "@/context/ModalContext";
 
 const ModalApplication = () => {
 
-    const { isLoginModalOpen,
-        isRegisterModalOpen,
-        closeRegisterModal,
-        closeLoginModal 
-    } = useModal();
+    const { isLoginModalOpen, isRegisterModalOpen, closeRegisterModal, closeLoginModal} = useModal();
 
     return (
         <>

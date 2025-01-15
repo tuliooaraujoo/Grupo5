@@ -9,3 +9,15 @@ export const formatDate = (date: Date) => {
     const month = monthNames[monthIndex];
     return { formattedDate: `${day}/${monthIndex + 1}/${year}`, month };
 };
+
+export const formatLongDate = (date: Date) => {
+    const formattedDate = date.toLocaleDateString("pt-BR", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+    });
+    return formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
+};
+
+export const normalizeText = (text: string) =>
+    text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();

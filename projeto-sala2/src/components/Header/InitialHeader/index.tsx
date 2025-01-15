@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { FiMenu } from "react-icons/fi";
 import Image from "next/image";
 import Button from "@/components/Button";
@@ -8,13 +7,10 @@ import ModalButtons from "@/components/Modal/ModalButtons";
 import ModalApplication from "@/components/Modal/ModalApplication";
 import logo_green from "../../../../public/images/logo/logo_green.svg";
 import logo_icon from "../../../../public/images/logo/logo_icon.svg";
+import { useMenu } from "@/hooks/useToogleMenu";
 
 const Header = () => {
-    const [menuOpen, setMenuOpen] = useState(false);
-
-    const toggleMenu = () => {
-        setMenuOpen(!menuOpen);
-    };
+    const {menuOpen, toggleMenu} = useMenu();
 
     return (
         <header className="flex justify-between items-center h-24 bg-black px-4 md:px-8 lg:px-16 relative">
