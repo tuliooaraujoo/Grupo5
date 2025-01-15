@@ -22,7 +22,7 @@ const FormLogin = () => {
         e.preventDefault();
         if (email === "admin@example.com" && password === "password123") {
             setError("");
-            router.push("/dashboard");
+            router.push("/dashboard/inicial");
         } else {
             setError("E-mail ou senha inválidos.");
         }
