@@ -1,9 +1,9 @@
 "use client";
 
-import { TransactionProvider } from "@/context/TransactionContext";
 import Menu from "@/components/Menu";
 import AccountSettings from "@/components/AccountSettings";
 import AccountHeader from "@/components/Header/AccountHeader";
+import { AccountProvider } from "@/context/AccountContext";
 
 const SettingsContent = () => {
 
@@ -20,9 +20,9 @@ const SettingsContent = () => {
 
 const SettingsLayout = () => {
     return (
-        <TransactionProvider>
+        <AccountProvider>
                 <SettingsContent />
-        </TransactionProvider>
+        </AccountProvider>
     );
 };
 
