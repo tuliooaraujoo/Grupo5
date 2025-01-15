@@ -30,7 +30,7 @@ const Cards = () => {
                 <div key={index}>
                     <p className="mb-6 max-md:text-center">{card.type}</p>
                     <div className="flex gap-6 items-center max-md:flex-col">
-                        <Image src={card.image} alt={card.type} width={327} height={164} className="max-lg:w-[237px]"/>
+                        <Image src={card.image} alt={card.type} width={250}/>
                         <div className="flex flex-col items-center gap-6">
                             <Button
                                 text="Configurar"
@@ -40,7 +40,7 @@ const Cards = () => {
                             <Button
                                 text="Bloquear"
                                 onClick={() => { }}
-                                className="bg-transparent text-red-500 border border-red-500 w-[200px]"
+                                className="bg-transparent text-red-500 border border-orange w-full"
                             />
                             <span>Função: {card.function}</span>
                         </div>

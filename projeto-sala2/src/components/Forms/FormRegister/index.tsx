@@ -27,6 +27,7 @@ const FormRegister = () => {
                     key={field.id}
                     id={field.id}
                     placeholder={field.placeholder}
+                    className="border-green focus:outline-green"
                 />
             ))}
             <CheckboxField

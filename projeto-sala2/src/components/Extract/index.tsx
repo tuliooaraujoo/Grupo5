@@ -11,7 +11,7 @@ interface ExtratoProps {
 const Extract = ({ transactions, onEdit, onDelete }: ExtratoProps) => {
 
   return (
-    <div className="bg-white p-6 rounded-lg">
+    <div className="bg-lightgray p-6 rounded-lg flex flex-col gap-4">
       <h3 className="text-2xl font-bold">Extrato</h3>
       <div>
         {transactions.length === 0 ? (
@@ -20,27 +20,24 @@ const Extract = ({ transactions, onEdit, onDelete }: ExtratoProps) => {
           <ul>
             {transactions.map((transaction) => {
               return (
-                <li key={transaction.id} className="border-b-2 border-green p-4">
-                  <div className="grid grid-cols-2 grid-rows-1 gap-2">
-                    <div className="text-green text-sm font-semibold">
+                <li key={transaction.id} className="border-b-2 border-green">
+                  <div className="h-[100px] grid grid-cols-3 grid-rows-3 gap-2 justify-center items-center">
+                    <div className="text-green text-sm font-semibold col-start-1 col-end-2 row-start-1 row-end-2">
                       {transaction.month}
                     </div>
-                    <div className="row-start-2">
+                    <div className="col-start-1 col-end-2 row-start-2 row-end-3">
                       {transaction.type === "depósito" ? "Depósito" : "Transferência"}
                     </div>
-                    <div className="row-start-3 font-semibold">
+                    <div className="col-start-1 col-end-2 row-start-3 row-end-4 text-green font-semibold">
                       R$ {transaction.value}
                     </div>
-                    <div className="row-start-2 col-start-3 text-sm text-placeholder">
+                    <div className="col-start-3 col-end-4 row-start-2 row-end-3 text-sm text-placeholder">
                       {transaction.date}
                     </div>
-                    <div className="row-start-3 col-start-3 flex justify-center gap-4 text-green">
+                    <div className="col-start-3 col-end-4 row-start-3 row-end-4 flex justify-center gap-4 text-green">
                       <Button
                         text={<MdEdit size={20} />}
-                        onClick={() => {
-                          console.log("Editar clicado:", transaction);
-                          onEdit(transaction);
-                        }}
+                        onClick={() => {onEdit(transaction);}}
                       />
                       <Button
                         text={<MdDelete size={20} />}

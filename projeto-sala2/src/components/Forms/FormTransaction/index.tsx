@@ -17,13 +17,12 @@ const FormTransaction = () => {
   } = useTransaction();
 
   return (
-      <form
-        className="relative bg-background bg-cover rounded-lg grid gap-4 grid-cols-2 grid-rows-5 p-8  max-sm:flex max-sm:flex-col max-sm:items-center max-sm:gap-2"
-      >
-        <h4 className="text-xl font-bold max-sm:text-center">
-          Nova Transação
-        </h4>
-        <div className="col-span-2">
+    <form
+      className=" max-h-[478px] max-sm:max-h-[800px] bg-background bg-cover rounded-lg p-8 max-sm:flex max-sm:flex-col max-sm:items-center max-sm:gap-2"
+    >
+      <h4 className="text-xl font-bold max-sm:text-center">Nova Transação</h4>
+      <div className="grid grid-cols-6 grid-row-3 gap-6 max-sm:flex max-sm:flex-col max-sm:items-center max-sm:gap-2">
+        <div className="col-start-1 col-end-5 row-start-1 mt-8">
           <SelectorField
             onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
               setTransactionType(e.target.value as "depósito" | "transferência")
@@ -31,30 +30,30 @@ const FormTransaction = () => {
             value={transactionType}
           />
         </div>
-        <div className="col-start-1">
+        <div className="col-start-1 col-end-4 row-start-2 row-end-3">
           <TextField
             id="Value"
             placeholder="R$ 00,00"
             value={amount}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAmount(e.target.value)}
-            className="lg:border lg:border-blue lg:focus:outline-blue md:border md:border-blue md:focus:outline-blue max-sm:border max-sm:border-blue max-sm:focus:outline-blue w-4/5 max-sm:w-full"
+            className="border-blue focus:outline-blue max-sm:w-full"
           />
         </div>
-        <div className="col-start-1">
+        <div className="col-start-1 col-end-4 row-start-3 row-end-4">
           <Button
             text={editingTransaction ? "Salvar Edição" : "Concluir Transação"}
-            className="bg-blue text-white w-4/5"
+            className="bg-blue text-white px-10"
             onClick={editingTransaction ? handleSaveEdit : handleTransaction}
           />
         </div>
-        <div className="row-start-4 row-span-2 col-start-2 flex justify-end items-end">
+        <div className="row-start-2 row-end-5 col-start-4 col-end-7 flex justify-end items-end">
           <Image
             src={transaction}
             alt="Ilustração de uma pessoa segurando um cartão gigante"
-            className="lg:hidden md:w-full max-sm:w-96 max-sm:mt-8"
           />
         </div>
-      </form>
+      </div>
+    </form>
   );
 };
 

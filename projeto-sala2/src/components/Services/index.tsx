@@ -37,7 +37,8 @@ const Services = () => {
                     <ServiceBox
                         key={index}
                         text={service.text}
-                        image={service.image} />
+                        image={service.image}
+                    />
                 ))}
             </div>
         </div>

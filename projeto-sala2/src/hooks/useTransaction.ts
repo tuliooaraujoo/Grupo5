@@ -80,7 +80,9 @@ const useTransaction = () => {
   const handleEditTransaction = (transaction: Transaction) => {
     setEditingTransaction(transaction);
     setAmount(transaction.value.toFixed(2));
+    setTransactionType(transaction.type);
   };
+  
 
   const handleSaveEdit = async () => {
     if (editingTransaction) {
@@ -89,23 +91,30 @@ const useTransaction = () => {
         alert("Por favor, insira um valor válido.");
         return;
       }
-
+  
       try {
-        const updatedTransaction = { ...editingTransaction, value };
-
+        const updatedTransaction: Transaction = {
+          ...editingTransaction,
+          value,
+          type: transactionType,
+        };
+  
         await updateTransaction(editingTransaction.id!, updatedTransaction);
-
+  
         setTransactionHistory((prevState) =>
           prevState.map((transaction) =>
-            transaction.id === editingTransaction.id
-              ? { ...transaction, value }
-              : transaction
+            transaction.id === editingTransaction.id ? updatedTransaction : transaction
           )
         );
 
-        const updatedBalance = balance - (editingTransaction.value - value);
+        const oldValue = editingTransaction.type === "depósito"
+          ? editingTransaction.value
+          : -editingTransaction.value;
+        const newValue = transactionType === "depósito" ? value : -value;
+  
+        const updatedBalance = balance + (newValue - oldValue);
         updateBalanceState(updatedBalance);
-
+  
         setEditingTransaction(null);
         setAmount("");
       } catch (error) {
@@ -113,6 +122,7 @@ const useTransaction = () => {
       }
     }
   };
+  
 
   const handleDeleteTransaction = async (transactionId: number) => {
     try {

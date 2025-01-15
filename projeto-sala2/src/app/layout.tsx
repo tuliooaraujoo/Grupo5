@@ -12,9 +12,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-Br">
-      <body>
-        {children}
-      </body>
+          <body>
+            {children}
+          </body>
     </html>
   );
 }

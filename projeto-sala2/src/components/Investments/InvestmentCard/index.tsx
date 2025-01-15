@@ -6,7 +6,7 @@ interface InvestmentCardProps {
   
   const InvestmentCard = ({ title, amount, onClick }: InvestmentCardProps) => (
     <div
-      className="max-w-[250px] w-full flex flex-col gap-4 bg-blue rounded-lg text-center py-2 cursor-pointer"
+      className="w-[240px] md:w-[250px] lg:w-[30opx] xl:w-[350px] flex flex-col gap-4 bg-blue rounded-lg text-center py-2 cursor-pointer"
       onClick={onClick}
     >
       <h4 className="text-white">{title}</h4>

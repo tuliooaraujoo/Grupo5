@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import graphic from "../../../public/images/illustrations/graphic.svg";
+import graphicSmall from "../../../public/images/illustrations/graphic_small.svg"
 import InvestmentCard from "./InvestmentCard";
 import useInvestmentPopup from "@/hooks/useInvestiment";
 import InvestmentPopup from "./InvestmentPopUp";
@@ -22,10 +23,10 @@ const Investments = () => {
   const totalInvestido = rendaFixa + rendaVariavel;
 
   return (
-    <div className="flex flex-col bg-background bg-cover rounded-lg gap-4 p-10">
+    <div className="flex flex-col bg-background bg-cover rounded-lg gap-4 p-6">
       <h2 className="font-bold text-2xl text-black">Investimentos</h2>
       <h3 className="text-2xl text-blue">Total: R${totalInvestido.toLocaleString()}</h3>
-      <div className="flex flex-wrap justify-around mb-4 gap-8">
+      <div className="flex flex-wrap gap-4 justify-center mb-4">
         <InvestmentCard
           title="Renda Fixa"
           amount={`R$${rendaFixa.toLocaleString()}`}
@@ -44,10 +45,16 @@ const Investments = () => {
           alt="Gráfico dos investimentos"
           width={382}
           height={152}
-          className="ml-28"
+          className="max-sm:hidden"
+        />
+        <Image
+          src={graphicSmall}
+          alt="Gráfico dos investimentos"
+          width={382}
+          height={152}
+          className="hidden max-sm:block"
         />
       </div>
-
       <InvestmentPopup
         isPopupOpen={isPopupOpen}
         currentType={currentType}

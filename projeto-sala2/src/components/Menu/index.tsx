@@ -1,31 +1,22 @@
-import React, { useState } from "react";
-import Button from "../Button";
+import Link from "next/link";
 
-interface MenuProps {
-    setActiveComponent: (component: string) => void;
-}
-
-const Menu = ({ setActiveComponent }: MenuProps) => {
-    const [activeOption, setActiveOption] = useState<string>("");
-
+const Menu = () => {
     const options = ['Inicial', 'Investimentos', 'Cartões', 'Serviços', 'Configurações'];
 
-    const handleOptionClick = (option: string) => {
-        setActiveOption(option);
-        setActiveComponent(option);
-    };
+    const normalizeText = (text: string) => 
+        text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
     return (
-        <div className="bg-lightgray rounded-lg p-6 flex flex-col items-start max-lg:flex-row max-sm:hidden">
+        <div className="bg-lightgray rounded-lg p-4 max-lg:flex max-lg:flex-row max-lg:justify-center max-sm:hidden">
             {options.map((option) => (
-                <div key={option} className="w-full justify-center">
-                    <Button
-                        text={option}
-                        onClick={() => handleOptionClick(option)}
-                        className={`text-left p-2 ${activeOption === option ? "font-bold text-green" : "text-black"
-                            }`}
-                    />
-                        <div className="border-b border-darkgray mt-2 w-full max-lg:hidden" />
+                <div key={option}>
+                    <Link 
+                        href={`/dashboard/${normalizeText(option)}`} 
+                        className="flex justify-center p-2 active:text-green active:font-bold active:scale-105"
+                    >
+                        {option}
+                    </Link>
+                    <div className="border-b border-darkgray mt-2 w-full max-lg:hidden" />
                 </div>
             ))}
         </div>
@@ -33,3 +24,4 @@ const Menu = ({ setActiveComponent }: MenuProps) => {
 };
 
 export default Menu;
+
