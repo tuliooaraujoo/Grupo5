@@ -4,12 +4,14 @@ import Button from "@/components/Button";
 import Link from "next/link";
 import { normalizeText } from "@/utils/formatters";
 import { useMenu } from "@/hooks/useToogleMenu";
+import useAccount from "@/hooks/useAccount";
 
 const AccountHeader = () => {
 
     const{menuOpen, toggleMenu} = useMenu();
     const normalizedText = normalizeText;
     const options = ['Inicial', 'Investimentos', 'Cartões', 'Serviços', 'Configurações'];
+    const {fullName} = useAccount();
 
     return (
         <header className="flex justify-end max-sm:justify-between items-center h-24 p-6 gap-8 bg-blue">
@@ -19,7 +21,7 @@ const AccountHeader = () => {
                 onClick={toggleMenu}
             />
             <div className="flex items-center gap-8">
-                <span className="text-white text-lg">Joana Oliveira</span>
+                <span className="text-white text-lg">{fullName}</span>
                 <Link href="/">
                     <IoPersonCircleOutline size={40} className="text-orange cursor-pointer" />
                 </Link>
