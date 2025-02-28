@@ -1,17 +1,9 @@
 {
-  "transactions": [
-    {
-      "id": "1d1b",
-      "type": "transferência",
-      "value": 1000,
-      "date": "22/02/2025",
-      "month": "Fevereiro"
-    }
-  ],
+  "transactions": [],
   "account": {
     "fullName": "Joana da Silva Oliveira",
     "firstName": "Joana",
-    "balance": 1410,
+    "balance": 2600,
     "currency": "R$"
   }
 }

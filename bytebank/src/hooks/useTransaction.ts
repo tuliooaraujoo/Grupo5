@@ -9,6 +9,7 @@ import { Transaction } from "@/interfaces/transaction";
 import { useTransactionContext } from "@/context/TransactionContext";
 import { formatDate } from "@/utils/formatters";
 import useAccount from "./useAccount";
+import { createClient } from "@supabase/supabase-js";
 
 const useTransaction = () => {
   const {
@@ -24,6 +25,11 @@ const useTransaction = () => {
 
   const { account, updateAccountState } = useAccount();
 
+const supabase =createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL || "",
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ""
+)
+
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
@@ -37,51 +43,71 @@ const useTransaction = () => {
     fetchTransactions();
   }, [setTransactionHistory]);
 
-  const handleTransaction = async () => {
-    const value = parseFloat(amount.replace("R$", "").replace(",", "."));
-    if (isNaN(value)) {
-      alert("Por favor, insira um valor válido.");
-      return;
-    }
 
-    const currentDate = new Date();
-    const { formattedDate, month } = formatDate(currentDate);
+const handleTransaction = async (file: File | null) => {
+  const value = parseFloat(amount.replace("R$", "").replace(",", "."));
+  if (isNaN(value)) {
+    alert("Por favor, insira um valor válido.");
+    return;
+  }
+
+  const currentDate = new Date();
+  const { formattedDate, month } = formatDate(currentDate);
+  let receiptUrl = "";
+
+  try {
+    if (file) {
+      const fileName = `${new Date().getTime()}-${file.name}`;
+      const { data, error } = await supabase.storage
+        .from("recibos-de-transacoes")
+        .upload(fileName, file);
+
+      if (error) throw error;
+
+      const { data: publicUrlData } = supabase.storage
+        .from("recibos-de-transacoes")
+        .getPublicUrl(fileName);
+
+      receiptUrl = publicUrlData.publicUrl;
+      console.log(receiptUrl)
+    }
 
     const newTransaction: Transaction = {
       type: transactionType,
       value,
       date: formattedDate,
       month,
+      receiptUrl,
     };
 
-    try {
-      let updatedBalance = account.balance;
+    let updatedBalance = account.balance;
 
-      if (transactionType === "depósito") {
-        updatedBalance += value;
-      } else if (transactionType === "transferência") {
-        if (value > account.balance) {
-          alert("Saldo insuficiente para transferência.");
-          return;
-        }
-        updatedBalance -= value;
+    if (transactionType === "depósito") {
+      updatedBalance += value;
+    } else if (transactionType === "transferência") {
+      if (value > account.balance) {
+        alert("Saldo insuficiente para transferência.");
+        return;
       }
-
-      const updatedAccount = { ...account, balance: updatedBalance };
-      await updateAccountState(updatedAccount);
-
-      const transactionResponse = await createTransaction(newTransaction);
-
-      setTransactionHistory((prevState) => [
-        ...prevState,
-        { ...newTransaction, id: transactionResponse.id },
-      ]);
-    } catch (error) {
-      console.error("Erro ao processar transação:", error);
+      updatedBalance -= value;
     }
 
-    setAmount("");
-  };
+    const updatedAccount = { ...account, balance: updatedBalance };
+    await updateAccountState(updatedAccount);
+
+    const transactionResponse = await createTransaction(newTransaction);
+
+    setTransactionHistory((prevState) => [
+      ...prevState,
+      { ...newTransaction, id: transactionResponse.id },
+    ]);
+  } catch (error) {
+    console.error("Erro ao processar transação:", error);
+  }
+
+  setAmount("");
+};
+
 
   const handleEditTransaction = (transaction: Transaction) => {
     setEditingTransaction(transaction);
@@ -89,7 +115,7 @@ const useTransaction = () => {
     setTransactionType(transaction.type);
   };
 
-  const handleSaveEdit = async () => {
+  const handleSaveEdit = async (transactionData: { type: "depósito" | "transferência"; amount: string; receipt: File | null; }) => {
     if (editingTransaction) {
       const value = parseFloat(amount.replace("R$", "").replace(",", "."));
       if (isNaN(value)) {

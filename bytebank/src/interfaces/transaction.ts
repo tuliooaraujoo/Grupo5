@@ -4,4 +4,5 @@ export interface Transaction {
     value: number;
     date: string;
     month: string;
+    receiptUrl?: string;
   }

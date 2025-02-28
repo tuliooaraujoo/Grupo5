@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Button from "@/components/Button";
-import { MdDelete, MdEdit } from "react-icons/md";
+import { MdDelete, MdEdit, MdFilePresent } from "react-icons/md";
 import { Transaction } from "@/interfaces/transaction";
 import { TransactionFilter } from "./Filter";
 
@@ -24,21 +24,21 @@ const Extract = ({ transactions, onEdit, onDelete }: ExtratoProps) => {
       const formattedMonth = month.padStart(2, "0");
       return `${year}-${formattedMonth}-${day}`;
     };
-  
+
     const matchesDate = filters.date
       ? formatTransactionDate(transaction.date) === filters.date
       : true;
-  
+
     const matchesType = filters.type ? transaction.type === filters.type : true;
-  
+
     const matchesMinValue = filters.minValue
       ? transaction.value >= parseFloat(filters.minValue)
       : true;
-  
+
     const matchesMaxValue = filters.maxValue
       ? transaction.value <= parseFloat(filters.maxValue)
       : true;
-  
+
     return matchesDate && matchesType && matchesMinValue && matchesMaxValue;
   });
 
@@ -68,7 +68,14 @@ const Extract = ({ transactions, onEdit, onDelete }: ExtratoProps) => {
                   <div className="col-start-3 col-end-4 row-start-2 row-end-3 text-sm text-placeholder">
                     {transaction.date}
                   </div>
-                  <div className="col-start-3 col-end-4 row-start-3 row-end-4 flex justify-center gap-4 text-green">
+                  <div className="col-start-3 col-end-4 row-start-3 row-end-4 flex justify-center items-center gap-4 text-green">
+
+                    {transaction.receiptUrl && (
+                      <a href={transaction.receiptUrl} target="_blank" rel="noopener noreferrer">
+                        <MdFilePresent size={20} />
+                      </a>
+                    )}
+
                     <Button text={<MdEdit size={20} />} onClick={() => onEdit(transaction)} />
                     <Button text={<MdDelete size={20} />} onClick={() => transaction.id && onDelete(transaction.id)} />
                   </div>
