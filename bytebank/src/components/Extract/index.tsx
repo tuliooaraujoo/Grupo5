@@ -3,20 +3,53 @@ import Button from "@/components/Button";
 import { MdDelete, MdEdit, MdFilePresent } from "react-icons/md";
 import { Transaction } from "@/interfaces/transaction";
 import { TransactionFilter } from "./Filter";
+import TransactionPopup from "./TransactionPopup";
 
-interface ExtratoProps {
+interface ExtractProps {
   transactions: Transaction[];
   onEdit: (transaction: Transaction) => void;
   onDelete: (transactionId: number) => void;
 }
 
-const Extract = ({ transactions, onEdit, onDelete }: ExtratoProps) => {
+const Extract = ({ transactions, onEdit, onDelete }: ExtractProps) => {
   const [filters, setFilters] = useState({
     date: "",
     type: "",
     minValue: "",
     maxValue: "",
   });
+
+  // Estado para controlar o popup
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [currentTransaction, setCurrentTransaction] = useState<Transaction | null>(null);
+  const [inputValue, setInputValue] = useState("");
+  const [transactionType, setTransactionType] = useState<"depósito" | "transferência">("depósito");
+
+  // Abrir popup e preencher os dados da transação
+  const openPopup = (transaction: Transaction) => {
+    setCurrentTransaction(transaction);
+    setInputValue(transaction.value.toString());
+    setTransactionType(transaction.type as "depósito" | "transferência");
+    setIsPopupOpen(true);
+  };
+
+  // Fechar popup
+  const closePopup = () => {
+    setIsPopupOpen(false);
+    setCurrentTransaction(null);
+  };
+
+  // Função para salvar edição
+  const handleSave = () => {
+    if (currentTransaction) {
+      onEdit({
+        ...currentTransaction,
+        value: parseFloat(inputValue),
+        type: transactionType,
+      });
+    }
+    closePopup();
+  };
 
   const filteredTransactions = transactions.filter((transaction) => {
     const formatTransactionDate = (dateString: string) => {
@@ -30,14 +63,8 @@ const Extract = ({ transactions, onEdit, onDelete }: ExtratoProps) => {
       : true;
 
     const matchesType = filters.type ? transaction.type === filters.type : true;
-
-    const matchesMinValue = filters.minValue
-      ? transaction.value >= parseFloat(filters.minValue)
-      : true;
-
-    const matchesMaxValue = filters.maxValue
-      ? transaction.value <= parseFloat(filters.maxValue)
-      : true;
+    const matchesMinValue = filters.minValue ? transaction.value >= parseFloat(filters.minValue) : true;
+    const matchesMaxValue = filters.maxValue ? transaction.value <= parseFloat(filters.maxValue) : true;
 
     return matchesDate && matchesType && matchesMinValue && matchesMaxValue;
   });
@@ -76,7 +103,7 @@ const Extract = ({ transactions, onEdit, onDelete }: ExtratoProps) => {
                       </a>
                     )}
 
-                    <Button text={<MdEdit size={20} />} onClick={() => onEdit(transaction)} />
+                    <Button text={<MdEdit size={20} />} onClick={() => openPopup(transaction)} />
                     <Button text={<MdDelete size={20} />} onClick={() => transaction.id && onDelete(transaction.id)} />
                   </div>
                 </div>
@@ -85,9 +112,18 @@ const Extract = ({ transactions, onEdit, onDelete }: ExtratoProps) => {
           </ul>
         )}
       </div>
+
+      <TransactionPopup
+        isPopupOpen={isPopupOpen}
+        transactionType={transactionType}
+        inputValue={inputValue}
+        closePopup={closePopup}
+        handleSubmit={handleSave}
+        setInputValue={setInputValue}
+        setTransactionType={setTransactionType}
+      />
     </div>
   );
 };
 
 export default Extract;
-

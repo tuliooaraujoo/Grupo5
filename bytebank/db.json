@@ -7,12 +7,20 @@
       "date": "02/03/2025",
       "month": "Março",
       "receiptUrl": "https://ndyyrnrbaevidytpmqmt.supabase.co/storage/v1/object/public/recibos-de-transacoes/1740925457452-4538%20-%20praticando%20css%20flexbox%20-%20imagem%20da%20atividade%201.png"
+    },
+    {
+      "id": "af91",
+      "type": "depósito",
+      "value": 1000,
+      "date": "02/03/2025",
+      "month": "Março",
+      "receiptUrl": ""
     }
   ],
   "account": {
     "fullName": "Joana da Silva Oliveira",
     "firstName": "Joana",
-    "balance": 2500,
+    "balance": 4500,
     "currency": "R$"
   }
 }
