@@ -19,10 +19,20 @@ const InvestmentPopup: React.FC<InvestmentPopupProps> = ({
 }) => {
   if (!isPopupOpen) return null;
 
+  const typeLabels: Record<string, string> = {
+    poupanca: "Poupança",
+    acoes: "Ações",
+    cdb: "CDB",
+    tesouro: "Tesouro Direto",
+    fundos: "Fundos de Investimento",
+  };
+
   return (
     <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center">
       <div className="bg-white p-6 rounded-lg max-w-sm w-full">
-        <h4 className="text-xl mb-4">Digite o valor para {currentType === "rendaFixa" ? "Renda Fixa" : "Renda Variável"}</h4>
+        <h4 className="text-xl mb-4">
+          Digite o valor para {typeLabels[currentType as keyof typeof typeLabels] || "Investimento"}
+        </h4>
         <input
           type="number"
           value={inputValue}
@@ -35,7 +45,7 @@ const InvestmentPopup: React.FC<InvestmentPopupProps> = ({
             onClick={closePopup}
             className="bg-blue text-white p-2 rounded"
           />
-        <Button
+          <Button
             text="Salvar"
             onClick={handleSubmit}
             className="bg-blue text-white p-2 rounded"

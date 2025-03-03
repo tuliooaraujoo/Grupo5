@@ -1,23 +1,21 @@
 import { useState } from "react";
 
-type InvestmentType = "rendaFixa" | "rendaVariavel";
-
 interface UseInvestmentPopupReturn {
   isPopupOpen: boolean;
-  currentType: InvestmentType | null;
+  currentType: string | null;
   inputValue: string;
-  openPopup: (type: InvestmentType, initialValue: number) => void;
+  openPopup: (type: string, initialValue: number) => void;
   closePopup: () => void;
-  handleSubmit: (setRendaFixa: (value: number) => void, setRendaVariavel: (value: number) => void) => void;
+  handleSubmit: (setInvestments: React.Dispatch<React.SetStateAction<any[]>>) => void;
   setInputValue: (value: string) => void;
 }
 
 const useInvestmentPopup = (): UseInvestmentPopupReturn => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [currentType, setCurrentType] = useState<InvestmentType | null>(null);
+  const [currentType, setCurrentType] = useState<string | null>(null);
   const [inputValue, setInputValue] = useState("");
 
-  const openPopup = (type: InvestmentType, initialValue: number) => {
+  const openPopup = (type: string, initialValue: number) => {
     setCurrentType(type);
     setInputValue(initialValue.toString());
     setIsPopupOpen(true);
@@ -25,15 +23,15 @@ const useInvestmentPopup = (): UseInvestmentPopupReturn => {
 
   const closePopup = () => setIsPopupOpen(false);
 
-  const handleSubmit = (
-    setRendaFixa: (value: number) => void,
-    setRendaVariavel: (value: number) => void
-  ) => {
-    if (currentType === "rendaFixa") {
-      setRendaFixa(Number(inputValue));
-    } else if (currentType === "rendaVariavel") {
-      setRendaVariavel(Number(inputValue));
-    }
+  const handleSubmit = (setInvestments: React.Dispatch<React.SetStateAction<any[]>>) => {
+    setInvestments((prevInvestments) => {
+      return prevInvestments.map((investment) => {
+        if (investment.type === currentType) {
+          return { ...investment, value: Number(inputValue) };
+        }
+        return investment;
+      });
+    });
     closePopup();
   };
 
