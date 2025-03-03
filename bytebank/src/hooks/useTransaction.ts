@@ -25,10 +25,15 @@ const useTransaction = () => {
 
   const { account, updateAccountState } = useAccount();
 
-const supabase =createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL || "",
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ""
-)
+  // Modificação: Verificação das variáveis de ambiente antes de criar o cliente
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  if (!supabaseUrl || !supabaseAnonKey) {
+    throw new Error("As variáveis de ambiente do Supabase não estão definidas corretamente.");
+  }
+
+  const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
   useEffect(() => {
     const fetchTransactions = async () => {
@@ -43,71 +48,69 @@ const supabase =createClient(
     fetchTransactions();
   }, [setTransactionHistory]);
 
-
-const handleTransaction = async (file: File | null) => {
-  const value = parseFloat(amount.replace("R$", "").replace(",", "."));
-  if (isNaN(value)) {
-    alert("Por favor, insira um valor válido.");
-    return;
-  }
-
-  const currentDate = new Date();
-  const { formattedDate, month } = formatDate(currentDate);
-  let receiptUrl = "";
-
-  try {
-    if (file) {
-      const fileName = `${new Date().getTime()}-${file.name}`;
-      const { data, error } = await supabase.storage
-        .from("recibos-de-transacoes")
-        .upload(fileName, file);
-
-      if (error) throw error;
-
-      const { data: publicUrlData } = supabase.storage
-        .from("recibos-de-transacoes")
-        .getPublicUrl(fileName);
-
-      receiptUrl = publicUrlData.publicUrl;
-      console.log(receiptUrl)
+  const handleTransaction = async (file: File | null) => {
+    const value = parseFloat(amount.replace("R$", "").replace(",", "."));
+    if (isNaN(value)) {
+      alert("Por favor, insira um valor válido.");
+      return;
     }
 
-    const newTransaction: Transaction = {
-      type: transactionType,
-      value,
-      date: formattedDate,
-      month,
-      receiptUrl,
-    };
+    const currentDate = new Date();
+    const { formattedDate, month } = formatDate(currentDate);
+    let receiptUrl = "";
 
-    let updatedBalance = account.balance;
+    try {
+      if (file) {
+        const fileName = `${new Date().getTime()}-${file.name}`;
+        const { data, error } = await supabase.storage
+          .from("recibos-de-transacoes")
+          .upload(fileName, file);
 
-    if (transactionType === "depósito") {
-      updatedBalance += value;
-    } else if (transactionType === "transferência") {
-      if (value > account.balance) {
-        alert("Saldo insuficiente para transferência.");
-        return;
+        if (error) throw error;
+
+        const { data: publicUrlData } = supabase.storage
+          .from("recibos-de-transacoes")
+          .getPublicUrl(fileName);
+
+        receiptUrl = publicUrlData.publicUrl;
+        console.log(receiptUrl);
       }
-      updatedBalance -= value;
+
+      const newTransaction: Transaction = {
+        type: transactionType,
+        value,
+        date: formattedDate,
+        month,
+        receiptUrl,
+      };
+
+      let updatedBalance = account.balance;
+
+      if (transactionType === "depósito") {
+        updatedBalance += value;
+      } else if (transactionType === "transferência") {
+        if (value > account.balance) {
+          alert("Saldo insuficiente para transferência.");
+          return;
+        }
+        updatedBalance -= value;
+      }
+
+      const updatedAccount = { ...account, balance: updatedBalance };
+      await updateAccountState(updatedAccount);
+
+      const transactionResponse = await createTransaction(newTransaction);
+
+      setTransactionHistory((prevState) => [
+        ...prevState,
+        { ...newTransaction, id: transactionResponse.id },
+      ]);
+    } catch (error) {
+      console.error("Erro ao processar transação:", error);
     }
 
-    const updatedAccount = { ...account, balance: updatedBalance };
-    await updateAccountState(updatedAccount);
-
-    const transactionResponse = await createTransaction(newTransaction);
-
-    setTransactionHistory((prevState) => [
-      ...prevState,
-      { ...newTransaction, id: transactionResponse.id },
-    ]);
-  } catch (error) {
-    console.error("Erro ao processar transação:", error);
-  }
-
-  setAmount("");
-};
-
+    setAmount("");
+  };
 
   const handleEditTransaction = (transaction: Transaction) => {
     setEditingTransaction(transaction);
