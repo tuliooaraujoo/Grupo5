@@ -8,7 +8,6 @@ interface TransactionPopupProps {
   handleSubmit: () => void;
 }
 
-
 const TransactionPopup: React.FC<TransactionPopupProps> = ({
   isPopupOpen,
   transactionType,

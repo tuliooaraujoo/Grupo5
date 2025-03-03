@@ -4,6 +4,7 @@ export interface ButtonProps {
     text:string | React.ReactNode;
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
     className?: string;
+    disabled?:{}
 }
 
 const Button = ({ className, onClick, text }: ButtonProps) => {
