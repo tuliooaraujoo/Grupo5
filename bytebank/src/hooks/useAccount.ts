@@ -32,6 +32,7 @@ const useAccount = () => {
       await updateAccount(newAccount);
       setAccount(newAccount);
       setName(newAccount.firstName || "Usuário");
+      console.log("Conta atualizada:", newAccount);
     } catch (error) {
       console.error("Erro ao atualizar conta:", error);
     }

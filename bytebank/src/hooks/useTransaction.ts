@@ -1,15 +1,9 @@
 import { useEffect } from "react";
-import {
-  createTransaction,
-  deleteTransaction,
-  getTransactions,
-  updateTransaction,
-} from "@/api/services/transaction";
+import { createTransaction, deleteTransaction, getTransactions, updateTransaction, } from "@/api/services/transaction";
 import { Transaction } from "@/interfaces/transaction";
 import { useTransactionContext } from "@/context/TransactionContext";
 import { formatDate } from "@/utils/formatters";
 import useAccount from "./useAccount";
-import { createClient } from "@supabase/supabase-js";
 
 const useTransaction = () => {
   const {
@@ -24,15 +18,6 @@ const useTransaction = () => {
   } = useTransactionContext();
 
   const { account, updateAccountState } = useAccount();
-
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-  if (!supabaseUrl || !supabaseAnonKey) {
-    throw new Error("As variáveis de ambiente do Supabase não estão definidas corretamente.");
-  }
-
-  const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
   useEffect(() => {
     const fetchTransactions = async () => {
@@ -56,22 +41,25 @@ const useTransaction = () => {
 
     const currentDate = new Date();
     const { formattedDate, month } = formatDate(currentDate);
+
     let receiptUrl = "";
 
     try {
       if (file) {
-        const fileName = `${new Date().getTime()}-${file.name}`;
-        const { data, error } = await supabase.storage
-          .from("recibos-de-transacoes")
-          .upload(fileName, file);
+        const formData = new FormData();
+        formData.append("file", file);
 
-        if (error) throw error;
+        const response = await fetch("http://localhost:3001/upload", {
+          method: "POST",
+          body: formData,
+        });
 
-        const { data: publicUrlData } = supabase.storage
-          .from("recibos-de-transacoes")
-          .getPublicUrl(fileName);
+        if (!response.ok) {
+          throw new Error("Erro ao fazer upload do recibo.");
+        }
 
-        receiptUrl = publicUrlData.publicUrl;
+        const data = await response.json();
+        receiptUrl = data.fileUrl;
         console.log(receiptUrl);
       }
 
@@ -82,9 +70,7 @@ const useTransaction = () => {
         month,
         receiptUrl,
       };
-
       let updatedBalance = account.balance;
-
       if (transactionType === "depósito") {
         updatedBalance += value;
       } else if (transactionType === "transferência") {
@@ -94,12 +80,9 @@ const useTransaction = () => {
         }
         updatedBalance -= value;
       }
-
       const updatedAccount = { ...account, balance: updatedBalance };
       await updateAccountState(updatedAccount);
-
       const transactionResponse = await createTransaction(newTransaction);
-
       setTransactionHistory((prevState) => [
         ...prevState,
         { ...newTransaction, id: transactionResponse.id },
@@ -107,56 +90,62 @@ const useTransaction = () => {
     } catch (error) {
       console.error("Erro ao processar transação:", error);
     }
-
     setAmount("");
   };
 
-  const handleEditTransaction = (transaction: Transaction) => {
-    setEditingTransaction(transaction);
-    setAmount(transaction.value.toFixed(2));
-    setTransactionType(transaction.type);
-  };
+  const handleEditTransaction = async (updatedTransaction: Transaction & { file?: File | null }) => {
+    try {
+      const { id, value, type, date, month, receiptUrl, file } = updatedTransaction;
+      let newReceiptUrl = receiptUrl;
 
-  const handleSaveEdit = async (transactionData: { type: "depósito" | "transferência"; amount: string; receipt: File | null; }) => {
-    if (editingTransaction) {
-      const value = parseFloat(amount.replace("R$", "").replace(",", "."));
-      if (isNaN(value)) {
-        alert("Por favor, insira um valor válido.");
-        return;
+      if (file) {
+        const formData = new FormData();
+        formData.append("file", file);
+
+        const response = await fetch("http://localhost:3001/upload", {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!response.ok) {
+          throw new Error("Erro ao fazer upload do recibo.");
+        }
+
+        const data = await response.json();
+        newReceiptUrl = data.fileUrl;
       }
 
-      try {
-        const updatedTransaction: Transaction = {
-          ...editingTransaction,
-          value,
-          type: transactionType,
-        };
+      await updateTransaction(id!, { value, type, date, month, receiptUrl: newReceiptUrl });
 
-        await updateTransaction(editingTransaction.id!, updatedTransaction);
+      let updatedBalance = account.balance;
+      const oldTransaction = transactionHistory.find((t) => t.id === id);
+      if (oldTransaction) {
+        if (oldTransaction.type === "depósito") {
+          updatedBalance -= oldTransaction.value;
+        } else if (oldTransaction.type === "transferência") {
+          updatedBalance += oldTransaction.value;
+        }
 
-        setTransactionHistory((prevState) =>
-          prevState.map((transaction) =>
-            transaction.id === editingTransaction.id ? updatedTransaction : transaction
-          )
-        );
-
-        const oldValue =
-          editingTransaction.type === "depósito"
-            ? editingTransaction.value
-            : -editingTransaction.value;
-        const newValue = transactionType === "depósito" ? value : -value;
-
-        const updatedBalance = account.balance + (newValue - oldValue);
-        const updatedAccount = { ...account, balance: updatedBalance };
-        await updateAccountState(updatedAccount);
-
-        setEditingTransaction(null);
-        setAmount("");
-      } catch (error) {
-        console.error("Erro ao editar transação:", error);
+        if (type === "depósito") {
+          updatedBalance += value;
+        } else if (type === "transferência") {
+          updatedBalance -= value;
+        }
       }
+
+      const updatedAccount = { ...account, balance: updatedBalance };
+      await updateAccountState(updatedAccount);
+
+      setTransactionHistory((prevState) =>
+        prevState.map((t) =>
+          t.id === id ? { ...t, value, type, date, month, receiptUrl: newReceiptUrl } : t
+        )
+      );
+    } catch (error) {
+      console.error("Erro ao editar transação:", error);
     }
   };
+
 
   const handleDeleteTransaction = async (transactionId: number) => {
     try {
@@ -172,6 +161,19 @@ const useTransaction = () => {
 
         const updatedAccount = { ...account, balance: updatedBalance };
         await updateAccountState(updatedAccount);
+
+        if (deletedTransaction.receiptUrl) {
+          const filename = deletedTransaction.receiptUrl.split("/").pop();
+          if (filename) {
+            await fetch("http://localhost:3001/delete-file", {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ filename }),
+            });
+          }
+        }
       }
 
       await deleteTransaction(transactionId);
@@ -190,11 +192,9 @@ const useTransaction = () => {
     setTransactionType,
     amount,
     setAmount,
-    editingTransaction,
     handleTransaction,
-    handleEditTransaction,
-    handleSaveEdit,
     handleDeleteTransaction,
+    handleEditTransaction
   };
 };
 

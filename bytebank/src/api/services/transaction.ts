@@ -21,7 +21,11 @@ export const getTransactions = async () => {
     }
   };
   
-  export const updateTransaction = async (transactionId: number, transaction: { value: number }) => {
+
+  export const updateTransaction = async (
+    transactionId: number,
+    transaction: { value: number; type: "depósito" | "transferência"; date: string; month: string; receiptUrl?: string }
+  ) => {
     try {
       await axios.put(`${BASE_URL}/transactions/${transactionId}`, transaction);
     } catch (error) {

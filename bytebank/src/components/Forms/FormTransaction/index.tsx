@@ -13,9 +13,7 @@ const FormTransaction = () => {
     setTransactionType,
     amount,
     setAmount,
-    editingTransaction,
     handleTransaction,
-    handleSaveEdit,
   } = useTransaction();
 
   const [receipt, setReceipt] = useState<File | null>(null);
@@ -27,17 +25,7 @@ const FormTransaction = () => {
   };
 
   const handleSubmit = () => {
-    const transactionData = {
-      type: transactionType,
-      amount,
-      receipt,
-    };
-
-    if (editingTransaction) {
-      handleSaveEdit(transactionData);
-    } else {
       handleTransaction(receipt);
-    }
   };
 
   return (
@@ -64,7 +52,6 @@ const FormTransaction = () => {
           />
         </div>
 
-        {/* Ícone de Upload */}
         <div className="col-start-1 col-end-4 row-start-3 row-end-4 flex items-center gap-4">
           <label htmlFor="receipt-upload" className="cursor-pointer flex items-center gap-2 text-blue-600">
             <FiUpload size={24} className="hover:text-blue-800 transition-all" />
@@ -78,7 +65,6 @@ const FormTransaction = () => {
             className="hidden"
           />
 
-          {/* Exibir nome do arquivo ou prévia da imagem */}
           {receipt && (
             <div className="flex items-center gap-2">
               {receipt.type.startsWith("image/") ? (
@@ -99,7 +85,7 @@ const FormTransaction = () => {
 
         <div className="col-start-1 col-end-4 row-start-4 row-end-5">
           <Button
-            text={editingTransaction ? "Salvar Edição" : "Concluir Transação"}
+            text="Concluir Transação"
             className="bg-blue text-white px-10"
             onClick={handleSubmit}
           />

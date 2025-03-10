@@ -28,7 +28,7 @@ const InvestmentPopup: React.FC<InvestmentPopupProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
       <div className="bg-white p-6 rounded-lg max-w-sm w-full">
         <h4 className="text-xl mb-4">
           Digite o valor para {typeLabels[currentType as keyof typeof typeLabels] || "Investimento"}

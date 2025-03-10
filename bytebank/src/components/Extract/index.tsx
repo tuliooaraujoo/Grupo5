@@ -3,9 +3,9 @@ import Button from "@/components/Button";
 import { MdDelete, MdEdit, MdFilePresent } from "react-icons/md";
 import { Transaction } from "@/interfaces/transaction";
 import { TransactionFilter } from "./Filter";
-import TransactionPopup from "./TransactionPopup";
 import usePagination from "@/hooks/usePagination";
 import PaginationControl from "./PaginationControl";
+import TransactionPopup from "./TransactionPopup";
 
 const itensPerPage = 4;
 
@@ -23,15 +23,12 @@ const Extract = ({ transactions, onEdit, onDelete }: ExtractProps) => {
     maxValue: "",
   });
 
+  const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null);
+
   const formatTransactionDate = (dateString: string) => {
     const [day, month, year] = dateString.split("/");
     return new Date(`${year}-${month}-${day}`).toISOString().split("T")[0];
   };
-
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [currentTransaction, setCurrentTransaction] = useState<Transaction | null>(null);
-  const [inputValue, setInputValue] = useState("");
-  const [transactionType, setTransactionType] = useState<"depósito" | "transferência">("depósito");
 
   const filteredTransactions = transactions.filter((transaction) => {
     const matchesDate = filters.date
@@ -46,29 +43,6 @@ const Extract = ({ transactions, onEdit, onDelete }: ExtractProps) => {
   });
 
   const { paginatedItems, currentPage, totalPages, goToPreviousPage, goToNextPage } = usePagination(filteredTransactions, itensPerPage);
-
-  const openPopup = (transaction: Transaction) => {
-    setCurrentTransaction(transaction);
-    setInputValue(transaction.value.toString());
-    setTransactionType(transaction.type as "depósito" | "transferência");
-    setIsPopupOpen(true);
-  };
-
-  const closePopup = () => {
-    setIsPopupOpen(false);
-    setCurrentTransaction(null);
-  };
-
-  const handleSave = () => {
-    if (currentTransaction) {
-      onEdit({
-        ...currentTransaction,
-        value: parseFloat(inputValue),
-        type: transactionType,
-      });
-    }
-    closePopup();
-  };
 
   return (
     <div className="bg-lightgray p-6 rounded-lg flex flex-col gap-4">
@@ -100,7 +74,7 @@ const Extract = ({ transactions, onEdit, onDelete }: ExtractProps) => {
                       <MdFilePresent size={20} />
                     </a>
                   )}
-                  <Button text={<MdEdit size={20} />} onClick={() => openPopup(transaction)} />
+                  <Button text={<MdEdit size={20} />} onClick={() => setEditingTransaction(transaction)} />
                   <Button text={<MdDelete size={20} />} onClick={() => transaction.id && onDelete(transaction.id)} />
                 </div>
               </div>
@@ -109,22 +83,29 @@ const Extract = ({ transactions, onEdit, onDelete }: ExtractProps) => {
         </ul>
       )}
 
-      <PaginationControl
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPrevious={goToPreviousPage}
-        onNext={goToNextPage}
-      />
+      {paginatedItems.length > 0 && (
+        <PaginationControl
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPrevious={goToPreviousPage}
+          onNext={goToNextPage}
+        />
+      )}
 
-      <TransactionPopup
-        isPopupOpen={isPopupOpen}
-        transactionType={transactionType}
-        inputValue={inputValue}
-        closePopup={closePopup}
-        handleSubmit={handleSave}
-        setInputValue={setInputValue}
-        setTransactionType={setTransactionType}
-      />
+      {editingTransaction && (
+        <TransactionPopup
+          transaction={editingTransaction}
+          onClose={() => setEditingTransaction(null)}
+          onSave={(updatedTransaction) => {
+            onEdit({
+              ...editingTransaction,
+              ...updatedTransaction,
+            });
+            setEditingTransaction(null);
+          }}
+        />
+      )}
+
     </div>
   );
 };

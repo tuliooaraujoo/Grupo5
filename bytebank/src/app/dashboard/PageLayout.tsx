@@ -12,7 +12,7 @@ interface PageLayoutProps {
 }
 
 const PageLayout = ({ mainContent }: PageLayoutProps) => {
-    const { transactionHistory, handleDeleteTransaction, handleEditTransaction } = useTransaction();
+    const { transactionHistory, handleDeleteTransaction, handleEditTransaction} = useTransaction();
     const { account } = useAccount();
 
     return (
