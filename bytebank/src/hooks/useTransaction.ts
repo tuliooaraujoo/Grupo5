@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import { createTransaction, deleteTransaction, getTransactions, updateTransaction, } from "@/api/services/transaction";
+import { createTransaction, deleteTransaction, getTransactions, updateTransaction } from "@/api/services/transaction";
+import { uploadFile, deleteFile } from "@/api/services/file";
 import { Transaction } from "@/interfaces/transaction";
 import { useTransactionContext } from "@/context/TransactionContext";
 import { formatDate } from "@/utils/formatters";
@@ -44,23 +45,7 @@ const useTransaction = () => {
 
     try {
       if (file) {
-        const formData = new FormData();
-        formData.append("file", file);
-
-        console.log(formData); 
-
-        const response = await fetch("http://localhost:3001/api/files/upload", {
-          method: "POST",
-          body: formData,
-        });
-
-        if (!response.ok) {
-          throw new Error("Erro ao fazer upload do recibo.");
-        }
-
-        const data = await response.json();
-        receiptUrl = data.fileUrl;
-        console.log(receiptUrl);
+        receiptUrl = await uploadFile(file);
       }
 
       const newTransaction: Transaction = {
@@ -70,6 +55,7 @@ const useTransaction = () => {
         month,
         receiptUrl,
       };
+
       let updatedBalance = account.balance;
       if (transactionType === "depósito") {
         updatedBalance += value;
@@ -97,53 +83,37 @@ const useTransaction = () => {
     try {
       const { id, value, type, date, month, receiptUrl } = transaction;
       let newReceiptUrl = receiptUrl;
-  
+
       if (file) {
         const previousFile = receiptUrl ? receiptUrl.split("/").pop() : null;
-  
+
         if (previousFile) {
-          await fetch("http://localhost:3001/api/files/delete-file", {
-            method: "DELETE",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ filename: previousFile }),
-          });
+          await deleteFile(previousFile);
         }
-  
-        const formData = new FormData();
-        formData.append("file", file);
-  
-        const response = await fetch("http://localhost:3001/api/files/upload", {
-          method: "POST",
-          body: formData,
-        });
-  
-        if (!response.ok) throw new Error("Erro ao fazer upload do recibo.");
-  
-        const data = await response.json();
-        newReceiptUrl = data.fileUrl;
+        newReceiptUrl = await uploadFile(file); 
       }
-  
+
       await updateTransaction(id!, { value, type, date, month, receiptUrl: newReceiptUrl });
-  
+
       let updatedBalance = account.balance;
       const oldTransaction = transactionHistory.find((t) => t.id === id);
       if (oldTransaction) {
         if (oldTransaction.type === "depósito") updatedBalance -= oldTransaction.value;
         else if (oldTransaction.type === "transferência") updatedBalance += oldTransaction.value;
-  
+
         if (type === "depósito") updatedBalance += value;
         else if (type === "transferência") updatedBalance -= value;
       }
-  
+
       await updateAccountState({ ...account, balance: updatedBalance });
-  
+
       setTransactionHistory((prevState) =>
         prevState.map((t) => (t.id === id ? { ...t, value, type, date, month, receiptUrl: newReceiptUrl } : t))
       );
     } catch (error) {
       console.error("Erro ao editar transação:", error);
     }
-  };  
+  };
 
   const handleDeleteTransaction = async (transactionId: number) => {
     try {
@@ -163,13 +133,7 @@ const useTransaction = () => {
         if (deletedTransaction.receiptUrl) {
           const filename = deletedTransaction.receiptUrl.split("/").pop();
           if (filename) {
-            await fetch("http://localhost:3001/delete-file", {
-              method: "DELETE",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ filename }),
-            });
+            await deleteFile(filename); 
           }
         }
       }

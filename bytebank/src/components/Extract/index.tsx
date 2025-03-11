@@ -6,6 +6,7 @@ import { TransactionFilter } from "./Filter";
 import usePagination from "@/hooks/usePagination";
 import PaginationControl from "./PaginationControl";
 import TransactionPopup from "./TransactionPopup";
+import PopUp from "../PopUp";
 
 const itensPerPage = 4;
 
@@ -44,6 +45,8 @@ const Extract = ({ transactions, onEdit, onDelete }: ExtractProps) => {
 
   const { paginatedItems, currentPage, totalPages, goToPreviousPage, goToNextPage } = usePagination(filteredTransactions, itensPerPage);
 
+  const [receiptUrl, setReceiptUrl] = useState<string | null>(null);
+
   return (
     <div className="bg-lightgray p-6 rounded-lg flex flex-col gap-4">
       <h3 className="text-2xl font-bold">Extrato</h3>
@@ -70,9 +73,9 @@ const Extract = ({ transactions, onEdit, onDelete }: ExtractProps) => {
                 </div>
                 <div className="col-start-3 col-end-4 row-start-3 row-end-4 flex justify-center items-center gap-4 text-green">
                   {transaction.receiptUrl && (
-                    <a href={transaction.receiptUrl} target="_blank" rel="noopener noreferrer">
+                    <button onClick={() => setReceiptUrl(transaction.receiptUrl ?? null)}>
                       <MdFilePresent size={20} />
-                    </a>
+                    </button>
                   )}
                   <Button text={<MdEdit size={20} />} onClick={() => setEditingTransaction(transaction)} />
                   <Button text={<MdDelete size={20} />} onClick={() => transaction.id && onDelete(transaction.id)} />
@@ -105,6 +108,24 @@ const Extract = ({ transactions, onEdit, onDelete }: ExtractProps) => {
           }}
         />
       )}
+
+      <PopUp
+        isOpen={!!receiptUrl}
+        title="Recibo"
+        onClose={() => setReceiptUrl(null)}
+        onSubmit={() => setReceiptUrl(null)}
+        hideButtons
+      >
+        {receiptUrl && (
+          <div className="flex justify-center items-center h-full">
+            <img
+              src={receiptUrl}
+              alt="Recibo"
+              className="max-w-full max-h-[500px]"
+            />
+          </div>
+        )}
+      </PopUp>
 
     </div>
   );
