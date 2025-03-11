@@ -1,7 +1,6 @@
 import axios from "axios";
 import { BASE_URL } from "../api";
 
-
 export const getAccount = async () => {
   try {
     const response = await axios.get(`${BASE_URL}/account`);

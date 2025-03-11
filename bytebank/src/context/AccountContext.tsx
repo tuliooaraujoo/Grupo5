@@ -23,7 +23,7 @@ export const AccountProvider = ({ children }: { children: React.ReactNode }) => 
   const [account, setAccount] = useState({
     fullName: "Joana da Silva Oliveira",
     firstName: "Joana",
-    balance: 2500,
+    balance: 3000,
     currency: "R$",
   });
 

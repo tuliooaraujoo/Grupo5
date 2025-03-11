@@ -47,7 +47,9 @@ const useTransaction = () => {
         const formData = new FormData();
         formData.append("file", file);
 
-        const response = await fetch("http://localhost:3001/upload", {
+        console.log(formData); 
+
+        const response = await fetch("http://localhost:3001/api/files/upload", {
           method: "POST",
           body: formData,
         });
@@ -100,7 +102,7 @@ const useTransaction = () => {
         const previousFile = receiptUrl ? receiptUrl.split("/").pop() : null;
   
         if (previousFile) {
-          await fetch("http://localhost:3001/delete-file", {
+          await fetch("http://localhost:3001/api/files/delete-file", {
             method: "DELETE",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ filename: previousFile }),
@@ -110,7 +112,7 @@ const useTransaction = () => {
         const formData = new FormData();
         formData.append("file", file);
   
-        const response = await fetch("http://localhost:3001/upload", {
+        const response = await fetch("http://localhost:3001/api/files/upload", {
           method: "POST",
           body: formData,
         });
