@@ -13,8 +13,6 @@ const useTransaction = () => {
     setTransactionType,
     amount,
     setAmount,
-    editingTransaction,
-    setEditingTransaction,
   } = useTransactionContext();
 
   const { account, updateAccountState } = useAccount();
@@ -93,59 +91,57 @@ const useTransaction = () => {
     setAmount("");
   };
 
-  const handleEditTransaction = async (updatedTransaction: Transaction & { file?: File | null }) => {
+  const handleEditTransaction = async (transaction: Transaction, file?: File | null) => {
     try {
-      const { id, value, type, date, month, receiptUrl, file } = updatedTransaction;
+      const { id, value, type, date, month, receiptUrl } = transaction;
       let newReceiptUrl = receiptUrl;
-
+  
       if (file) {
+        const previousFile = receiptUrl ? receiptUrl.split("/").pop() : null;
+  
+        if (previousFile) {
+          await fetch("http://localhost:3001/delete-file", {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ filename: previousFile }),
+          });
+        }
+  
         const formData = new FormData();
         formData.append("file", file);
-
+  
         const response = await fetch("http://localhost:3001/upload", {
           method: "POST",
           body: formData,
         });
-
-        if (!response.ok) {
-          throw new Error("Erro ao fazer upload do recibo.");
-        }
-
+  
+        if (!response.ok) throw new Error("Erro ao fazer upload do recibo.");
+  
         const data = await response.json();
         newReceiptUrl = data.fileUrl;
       }
-
+  
       await updateTransaction(id!, { value, type, date, month, receiptUrl: newReceiptUrl });
-
+  
       let updatedBalance = account.balance;
       const oldTransaction = transactionHistory.find((t) => t.id === id);
       if (oldTransaction) {
-        if (oldTransaction.type === "depósito") {
-          updatedBalance -= oldTransaction.value;
-        } else if (oldTransaction.type === "transferência") {
-          updatedBalance += oldTransaction.value;
-        }
-
-        if (type === "depósito") {
-          updatedBalance += value;
-        } else if (type === "transferência") {
-          updatedBalance -= value;
-        }
+        if (oldTransaction.type === "depósito") updatedBalance -= oldTransaction.value;
+        else if (oldTransaction.type === "transferência") updatedBalance += oldTransaction.value;
+  
+        if (type === "depósito") updatedBalance += value;
+        else if (type === "transferência") updatedBalance -= value;
       }
-
-      const updatedAccount = { ...account, balance: updatedBalance };
-      await updateAccountState(updatedAccount);
-
+  
+      await updateAccountState({ ...account, balance: updatedBalance });
+  
       setTransactionHistory((prevState) =>
-        prevState.map((t) =>
-          t.id === id ? { ...t, value, type, date, month, receiptUrl: newReceiptUrl } : t
-        )
+        prevState.map((t) => (t.id === id ? { ...t, value, type, date, month, receiptUrl: newReceiptUrl } : t))
       );
     } catch (error) {
       console.error("Erro ao editar transação:", error);
     }
-  };
-
+  };  
 
   const handleDeleteTransaction = async (transactionId: number) => {
     try {

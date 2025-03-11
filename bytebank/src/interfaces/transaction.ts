@@ -6,3 +6,15 @@ export interface Transaction {
     month: string;
     receiptUrl?: string;
   }
+
+  export interface TransactionPopupProps {
+    transaction: Transaction;
+    onClose: () => void;
+    onSave: (updatedTransaction: {
+      value: number;
+      type: "depósito" | "transferência";
+      date: string;
+      month: string;
+      receiptUrl?: string;
+    }) => void;
+  }
