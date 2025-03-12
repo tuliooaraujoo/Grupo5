@@ -1,5 +1,10 @@
 import { useEffect } from "react";
-import { createTransaction, deleteTransaction, getTransactions, updateTransaction } from "@/api/services/transaction";
+import {
+  createTransaction,
+  deleteTransaction,
+  getTransactions,
+  updateTransaction,
+} from "@/api/services/transaction";
 import { uploadFile, deleteFile } from "@/api/services/file";
 import { Transaction } from "@/interfaces/transaction";
 import { useTransactionContext } from "@/context/TransactionContext";
@@ -21,58 +26,42 @@ const useTransaction = () => {
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        const transactionsData = await getTransactions();
-        setTransactionHistory(transactionsData);
+        setTransactionHistory(await getTransactions());
       } catch (error) {
         console.error("Erro ao carregar transações:", error);
       }
     };
-
     fetchTransactions();
   }, [setTransactionHistory]);
 
+  const calculateUpdatedBalance = (currentBalance: number, transaction: Transaction, isReverting = false) => {
+    const factor = isReverting ? -1 : 1;
+    return transaction.type === "depósito"
+      ? currentBalance + factor * transaction.value
+      : currentBalance - factor * transaction.value;
+  };
+
+  const handleFileUpload = async (file?: File | null, oldUrl?: string) => {
+    if (!file) return oldUrl || "";
+    if (oldUrl) await deleteFile(oldUrl.split("/").pop()!);
+    return await uploadFile(file);
+  };
+
   const handleTransaction = async (file: File | null) => {
     const value = parseFloat(amount.replace("R$", "").replace(",", "."));
-    if (isNaN(value)) {
-      alert("Por favor, insira um valor válido.");
-      return;
-    }
+    if (isNaN(value)) return alert("Por favor, insira um valor válido.");
 
-    const currentDate = new Date();
-    const { formattedDate, month } = formatDate(currentDate);
+    const { formattedDate, month } = formatDate(new Date());
+    const receiptUrl = await handleFileUpload(file);
 
-    let receiptUrl = "";
+    if (transactionType === "transferência" && value > account.balance)
+      return alert("Saldo insuficiente para transferência.");
 
+    const newTransaction: Transaction = { type: transactionType, value, date: formattedDate, month, receiptUrl };
     try {
-      if (file) {
-        receiptUrl = await uploadFile(file);
-      }
-
-      const newTransaction: Transaction = {
-        type: transactionType,
-        value,
-        date: formattedDate,
-        month,
-        receiptUrl,
-      };
-
-      let updatedBalance = account.balance;
-      if (transactionType === "depósito") {
-        updatedBalance += value;
-      } else if (transactionType === "transferência") {
-        if (value > account.balance) {
-          alert("Saldo insuficiente para transferência.");
-          return;
-        }
-        updatedBalance -= value;
-      }
-      const updatedAccount = { ...account, balance: updatedBalance };
-      await updateAccountState(updatedAccount);
-      const transactionResponse = await createTransaction(newTransaction);
-      setTransactionHistory((prevState) => [
-        ...prevState,
-        { ...newTransaction, id: transactionResponse.id },
-      ]);
+      await updateAccountState({ ...account, balance: calculateUpdatedBalance(account.balance, newTransaction) });
+      const { id } = await createTransaction(newTransaction);
+      setTransactionHistory([...transactionHistory, { ...newTransaction, id }]);
     } catch (error) {
       console.error("Erro ao processar transação:", error);
     }
@@ -81,35 +70,17 @@ const useTransaction = () => {
 
   const handleEditTransaction = async (transaction: Transaction, file?: File | null) => {
     try {
-      const { id, value, type, date, month, receiptUrl } = transaction;
-      let newReceiptUrl = receiptUrl;
+      const oldTransaction = transactionHistory.find((t) => t.id === transaction.id);
+      if (!oldTransaction) return;
 
-      if (file) {
-        const previousFile = receiptUrl ? receiptUrl.split("/").pop() : null;
+      const receiptUrl = await handleFileUpload(file, oldTransaction.receiptUrl);
+      await updateTransaction(transaction.id!, { ...transaction, receiptUrl });
 
-        if (previousFile) {
-          await deleteFile(previousFile);
-        }
-        newReceiptUrl = await uploadFile(file); 
-      }
-
-      await updateTransaction(id!, { value, type, date, month, receiptUrl: newReceiptUrl });
-
-      let updatedBalance = account.balance;
-      const oldTransaction = transactionHistory.find((t) => t.id === id);
-      if (oldTransaction) {
-        if (oldTransaction.type === "depósito") updatedBalance -= oldTransaction.value;
-        else if (oldTransaction.type === "transferência") updatedBalance += oldTransaction.value;
-
-        if (type === "depósito") updatedBalance += value;
-        else if (type === "transferência") updatedBalance -= value;
-      }
-
+      let updatedBalance = calculateUpdatedBalance(account.balance, oldTransaction, true);
+      updatedBalance = calculateUpdatedBalance(updatedBalance, transaction);
       await updateAccountState({ ...account, balance: updatedBalance });
 
-      setTransactionHistory((prevState) =>
-        prevState.map((t) => (t.id === id ? { ...t, value, type, date, month, receiptUrl: newReceiptUrl } : t))
-      );
+      setTransactionHistory(transactionHistory.map((t) => (t.id === transaction.id ? { ...transaction, receiptUrl } : t)));
     } catch (error) {
       console.error("Erro ao editar transação:", error);
     }
@@ -117,32 +88,13 @@ const useTransaction = () => {
 
   const handleDeleteTransaction = async (transactionId: number) => {
     try {
-      const deletedTransaction = transactionHistory.find(
-        (transaction) => transaction.id === transactionId
-      );
+      const transaction = transactionHistory.find((t) => t.id === transactionId);
+      if (!transaction) return;
 
-      if (deletedTransaction) {
-        const updatedBalance =
-          deletedTransaction.type === "depósito"
-            ? account.balance - deletedTransaction.value
-            : account.balance + deletedTransaction.value;
-
-        const updatedAccount = { ...account, balance: updatedBalance };
-        await updateAccountState(updatedAccount);
-
-        if (deletedTransaction.receiptUrl) {
-          const filename = deletedTransaction.receiptUrl.split("/").pop();
-          if (filename) {
-            await deleteFile(filename); 
-          }
-        }
-      }
-
+      if (transaction.receiptUrl) await deleteFile(transaction.receiptUrl.split("/").pop()!);
       await deleteTransaction(transactionId);
-
-      setTransactionHistory((prevState) =>
-        prevState.filter((transaction) => transaction.id !== transactionId)
-      );
+      await updateAccountState({ ...account, balance: calculateUpdatedBalance(account.balance, transaction, true) });
+      setTransactionHistory(transactionHistory.filter((t) => t.id !== transactionId));
     } catch (error) {
       console.error("Erro ao excluir transação:", error);
     }
@@ -155,8 +107,8 @@ const useTransaction = () => {
     amount,
     setAmount,
     handleTransaction,
+    handleEditTransaction,
     handleDeleteTransaction,
-    handleEditTransaction
   };
 };
 

@@ -1,5 +1,5 @@
 export interface Transaction {
-    id?: number;
+    id: number;
     type: "depósito" | "transferência";
     value: number;
     date: string;
@@ -17,4 +17,11 @@ export interface Transaction {
       month: string;
       receiptUrl?: string;
     }) => void;
+  }
+
+ export interface TransactionListProps {
+    transactions: Transaction[];
+    onEdit: (transaction: Transaction) => void;
+    onDelete: (transactionId: number) => void;
+    onShowReceipt: (receiptUrl: string | null) => void;
   }
