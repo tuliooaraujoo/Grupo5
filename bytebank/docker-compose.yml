@@ -1,0 +1,21 @@
+version: '3.9'
+services:
+  backend:
+    image: weliton/backend
+    container_name: backend
+    networks:
+      - compose-bridge
+    ports:
+      - 3001:3001
+
+  frontend:
+    image: weliton/frontend
+    container_name: frontend
+    networks:
+      - compose-bridge
+    ports:
+      - 3000:3000
+    
+networks:
+  compose-bridge:
+    driver: bridge
