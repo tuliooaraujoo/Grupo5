@@ -6,6 +6,7 @@ import { dirname, join } from "path";
 import fileRoutes from "./routes/fileRoutes.js";
 import account from "./routes/accountRoutes.js"
 import transaction from "./routes/transactionsRoutes.js";
+import investment from "./routes/investmentRoutes.js"
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -18,9 +19,10 @@ app.use(json());
 app.use(express.json());
 
 app.use("/uploads", serveStatic(join(__dirname, "uploads")));
-app.use("/api/files", fileRoutes);
+app.use("/files", fileRoutes);
 app.use("/account", account);
 app.use("/transactions", transaction);
+app.use('/investments', investment);
 
 app.listen(PORT, () => {
   console.log(`Servidor rodando em http://localhost:${PORT}`);

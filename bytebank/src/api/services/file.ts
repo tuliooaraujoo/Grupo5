@@ -5,7 +5,7 @@ export const uploadFile = async (file: File): Promise<string> => {
       const formData = new FormData();
       formData.append("file", file);
   
-      const response = await fetch(`${BASE_URL}/api/files/upload`, {
+      const response = await fetch(`${BASE_URL}/files/upload`, {
         method: "POST",
         body: formData,
       });
@@ -24,7 +24,7 @@ export const uploadFile = async (file: File): Promise<string> => {
   
   export const deleteFile = async (filename: string): Promise<void> => {
     try {
-      await fetch(`${BASE_URL}/api/files/delete-file`, {
+      await fetch(`${BASE_URL}/files/delete-file`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ filename }),

@@ -24,7 +24,6 @@ const InvestmentCharts = ({ investments }: InvestmentChartsProps) => {
         Estimado: investment.value * ((1 + investment.taxa) ** 12 - 1) + investment.value,
     }));
 
-    // Função para formatar valores como moeda brasileira (R$)
     const formatCurrency = (value: number) => {
         return value.toLocaleString('pt-BR', {
             style: 'currency',
@@ -51,7 +50,7 @@ const InvestmentCharts = ({ investments }: InvestmentChartsProps) => {
                         ))}
                     </Pie>
                     <Tooltip 
-                        formatter={(value) => formatCurrency(Number(value))}  // Formatação no Tooltip
+                        formatter={(value) => formatCurrency(Number(value))}
                     />
                 </PieChart>
             </div>

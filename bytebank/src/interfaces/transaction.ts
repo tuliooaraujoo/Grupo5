@@ -1,5 +1,5 @@
 export interface Transaction {
-    id: number;
+    id?: number;
     type: "depósito" | "transferência";
     value: number;
     date: string;

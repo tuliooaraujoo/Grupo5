@@ -31,7 +31,7 @@ const TransactionList = ({ transactions, onEdit, onDelete, onShowReceipt }: Tran
                 </button>
               )}
               <Button text={<MdEdit size={20} />} onClick={() => onEdit(transaction)} />
-              <Button text={<MdDelete size={20} />} onClick={() => onDelete(transaction.id)} />
+              <Button text={<MdDelete size={20} />} onClick={() => onDelete(transaction.id!)} />
             </div>
           </div>
         </li>

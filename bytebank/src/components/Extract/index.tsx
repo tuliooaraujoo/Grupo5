@@ -25,6 +25,7 @@ const Extract = ({ transactions, onEdit, onDelete }: ExtractProps) => {
   return (
     <div className="bg-lightgray p-6 rounded-lg flex flex-col gap-4">
       <h3 className="text-2xl font-bold">Extrato</h3>
+
       <TransactionFilter filters={filters} setFilters={setFilters} />
 
       <TransactionList

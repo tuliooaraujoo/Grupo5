@@ -47,3 +47,57 @@ const useInvestmentPopup = (): UseInvestmentPopupReturn => {
 };
 
 export default useInvestmentPopup;
+
+// import { updateInvestment } from "@/api/services/investment";
+// import { useState } from "react";
+
+// interface UseInvestmentPopupReturn {
+//   isPopupOpen: boolean;
+//   currentType: string | null;
+//   inputValue: string;
+//   openPopup: (type: string, initialValue: number) => void;
+//   closePopup: () => void;
+//   handleSubmit: (setInvestments: React.Dispatch<React.SetStateAction<any[]>>) => void;
+//   setInputValue: (value: string) => void;
+// }
+
+// const useInvestmentPopup = (): UseInvestmentPopupReturn => {
+//   const [isPopupOpen, setIsPopupOpen] = useState(false);
+//   const [currentType, setCurrentType] = useState<string | null>(null);
+//   const [inputValue, setInputValue] = useState("");
+
+//   const openPopup = (type: string, initialValue: number) => {
+//     setCurrentType(type);
+//     setInputValue(initialValue.toString());
+//     setIsPopupOpen(true);
+//   };
+
+//   const closePopup = () => setIsPopupOpen(false);
+
+//   const handleSubmit = async (setInvestments: React.Dispatch<React.SetStateAction<any[]>>) => {
+//     if (!currentType) return;
+//     try {
+//       const updatedInvestment = await updateInvestment(currentType, Number(inputValue));
+//       setInvestments((prevInvestments) =>
+//         prevInvestments.map((investment) =>
+//           investment.type === currentType ? updatedInvestment : investment
+//         )
+//       );
+//     } catch (error) {
+//       console.error("Erro ao atualizar investimento", error);
+//     }
+//     closePopup();
+//   };
+
+//   return {
+//     isPopupOpen,
+//     currentType,
+//     inputValue,
+//     openPopup,
+//     closePopup,
+//     handleSubmit,
+//     setInputValue,
+//   };
+// };
+
+// export default useInvestmentPopup;

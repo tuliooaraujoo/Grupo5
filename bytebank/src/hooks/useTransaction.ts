@@ -57,7 +57,8 @@ const useTransaction = () => {
     if (transactionType === "transferência" && value > account.balance)
       return alert("Saldo insuficiente para transferência.");
 
-    const newTransaction: Transaction = { type: transactionType, value, date: formattedDate, month, receiptUrl };
+    const newTransaction: Transaction = {
+      type: transactionType, value, date: formattedDate, month, receiptUrl}
     try {
       await updateAccountState({ ...account, balance: calculateUpdatedBalance(account.balance, newTransaction) });
       const { id } = await createTransaction(newTransaction);
@@ -108,7 +109,7 @@ const useTransaction = () => {
     setAmount,
     handleTransaction,
     handleEditTransaction,
-    handleDeleteTransaction,
+    handleDeleteTransaction
   };
 };
 
