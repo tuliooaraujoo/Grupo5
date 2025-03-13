@@ -1,10 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Transaction } from "@/interfaces/transaction";
 
 const usePagination = (transactions: Transaction[], itemsPerPage: number) => {
   const [currentPage, setCurrentPage] = useState(0);
 
   const totalPages = Math.ceil(transactions.length / itemsPerPage);
+
+  useEffect(() => {
+    if (currentPage >= totalPages && totalPages > 0) {
+      setCurrentPage(totalPages - 1);
+    }
+  }, [transactions, totalPages, currentPage]);
 
   const paginatedItems = transactions.slice(
     currentPage * itemsPerPage,

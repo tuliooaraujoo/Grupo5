@@ -9,22 +9,25 @@ interface PaginationProps {
 }
 
 const Pagination = ({ currentPage, totalPages, onPrevious, onNext }: PaginationProps) => {
+    const isFirstPage = currentPage === 0;
+    const isLastPage = currentPage === totalPages - 1;
+
     return (
         <div className="flex justify-center items-center gap-4 mt-4">
             <Button
-                className="px-4 py-2 bg-green rounded-4 text-white disabled:opacity-50"
-                disabled={currentPage === 0}
+                className="px-4 py-2 bg-green rounded-md text-white disabled:opacity-50"
+                disabled={isFirstPage}
                 onClick={onPrevious}
-                text={<GrFormPrevious size={24}/>}
+                text={<GrFormPrevious size={24} />}
             />
             <span className="text-lg font-bold text-darkgray">
                 {currentPage + 1} / {totalPages}
             </span>
             <Button
-                className="px-4 py-2 bg-green rounded-4 text-white disabled:opacity-50"
-                disabled={currentPage === totalPages - 1}
+                className="px-4 py-2 bg-green rounded-md text-white disabled:opacity-50"
+                disabled={isLastPage}
                 onClick={onNext}
-                text={<GrFormNext size={24}/>}
+                text={<GrFormNext size={24} />}
             />
         </div>
     );
