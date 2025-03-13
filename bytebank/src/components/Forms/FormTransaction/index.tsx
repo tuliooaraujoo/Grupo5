@@ -6,6 +6,7 @@ import SelectorField from "@/components/Inputs/SelectorField";
 import Image from "next/image";
 import transaction from "../../../../public/images/illustrations/transaction.svg";
 import useTransaction from "@/hooks/useTransaction";
+import CheckboxField from "@/components/Inputs/CheckboxField";
 
 const FormTransaction = () => {
   const {
@@ -42,7 +43,28 @@ const FormTransaction = () => {
             value={transactionType}
           />
         </div>
-        <div className="col-start-1 col-end-4 row-start-2 row-end-3">
+        <div className="col-start-1 col-end-5 row-start-2 mt-8">
+          <h2 className="text-l font-bold max-sm:text-center">Sugestões de valor</h2>
+          <CheckboxField
+            id="sugestao1"
+            label="R$ 10,00"
+            checked= {false}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAmount("10,00")}
+          />
+          <CheckboxField
+            id="sugestao2"
+            label="R$ 50,00"
+            checked= {false}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAmount("50,00")}
+          />
+          <CheckboxField
+            id="sugestao3"
+            label="R$ 100,00"
+            checked= {false}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAmount("100,00")}
+          />
+        </div>
+        <div className="col-start-1 col-end-4 row-start-3 row-end-4">
           <TextField
             id="Value"
             placeholder="R$ 00,00"
@@ -52,7 +74,7 @@ const FormTransaction = () => {
           />
         </div>
 
-        <div className="col-start-1 col-end-4 row-start-3 row-end-4 flex items-center gap-4">
+        <div className="col-start-1 col-end-4 row-start-4 row-end-5 flex items-center gap-4">
           <label htmlFor="receipt-upload" className="cursor-pointer flex items-center gap-2 text-blue-600">
             <FiUpload size={24} className="hover:text-blue-800 transition-all" />
             <span className="text-sm">Anexar Recibo</span>
@@ -83,7 +105,7 @@ const FormTransaction = () => {
           )}
         </div>
 
-        <div className="col-start-1 col-end-4 row-start-4 row-end-5">
+        <div className="col-start-1 col-end-4 row-start-5 row-end-6">
           <Button
             text="Concluir Transação"
             className="bg-blue text-white px-10"
@@ -91,7 +113,7 @@ const FormTransaction = () => {
           />
         </div>
 
-        <div className="row-start-2 row-end-5 col-start-4 col-end-7 flex justify-end items-end">
+        <div className="row-start-2 row-end-6 col-start-4 col-end-7 flex justify-end items-end">
           <Image
             src={transaction}
             alt="Ilustração de uma pessoa segurando um cartão gigante"

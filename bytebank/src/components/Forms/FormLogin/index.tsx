@@ -4,7 +4,8 @@ import Image from "next/image";
 import login from "../../../../public/images/illustrations/login.svg";
 import TextField from "@/components/Inputs/TextField";
 import Button from "@/components/Button";
-import useLogin from "../../../hooks/useLogin"
+import useLogin from "@/hooks/UseLogin";
+
 
 const FormLogin = () => {
     const { email, password, error, setEmail, setPassword, handleLogin } = useLogin();
