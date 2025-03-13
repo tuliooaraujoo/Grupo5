@@ -1,7 +1,7 @@
 version: '3.9'
 services:
   backend:
-    image: weliton/backend
+    image: bytebank/backend
     container_name: backend
     networks:
       - compose-bridge
@@ -9,7 +9,7 @@ services:
       - 3001:3001
 
   frontend:
-    image: weliton/frontend
+    image: bytebank/frontend
     container_name: frontend
     networks:
       - compose-bridge
