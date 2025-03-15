@@ -15,6 +15,17 @@ services:
       - compose-bridge
     ports:
       - 3000:3000
+    depends_on:
+      - dashboard
+
+  dashboard:
+    build:
+      context: ./dashboard  # Caminho para o diretório do dashboard
+    container_name: dashboard
+    networks:
+      - compose-bridge
+    ports:
+      - 3002:3002
     
 networks:
   compose-bridge:
