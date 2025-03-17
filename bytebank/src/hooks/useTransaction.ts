@@ -48,39 +48,63 @@ const useTransaction = () => {
   };
 
   const handleTransaction = async (file: File | null) => {
+    if (transactionType !== "depósito" && transactionType !== "transferência") {
+      return alert("Por favor, selecione um tipo de transação válido.");
+    }
+  
     const value = parseFloat(amount.replace("R$", "").replace(",", "."));
     if (isNaN(value)) return alert("Por favor, insira um valor válido.");
-
+  
     const { formattedDate, month } = formatDate(new Date());
     const receiptUrl = await handleFileUpload(file);
-
+  
     if (transactionType === "transferência" && value > account.balance)
       return alert("Saldo insuficiente para transferência.");
-
+  
     const newTransaction: Transaction = {
-      type: transactionType, value, date: formattedDate, month, receiptUrl}
+      type: transactionType,
+      value,
+      date: formattedDate,
+      month,
+      receiptUrl,
+    };
+  
     try {
-      await updateAccountState({ ...account, balance: calculateUpdatedBalance(account.balance, newTransaction) });
+      await updateAccountState({
+        ...account,
+        balance: calculateUpdatedBalance(account.balance, newTransaction),
+      });
       const { id } = await createTransaction(newTransaction);
       setTransactionHistory([...transactionHistory, { ...newTransaction, id }]);
     } catch (error) {
       console.error("Erro ao processar transação:", error);
     }
+  
     setAmount("");
+    setTransactionType("");
   };
 
   const handleEditTransaction = async (transaction: Transaction, file?: File | null) => {
     try {
       const oldTransaction = transactionHistory.find((t) => t.id === transaction.id);
       if (!oldTransaction) return;
-
+  
+      if (!transaction.type || (transaction.type !== "depósito" && transaction.type !== "transferência")) {
+        return alert("Por favor, selecione um tipo de transação válido.");
+      }
+  
       const receiptUrl = await handleFileUpload(file, oldTransaction.receiptUrl);
-      await updateTransaction(transaction.id!, { ...transaction, receiptUrl });
-
+      
+      await updateTransaction(transaction.id!, { 
+        ...transaction, 
+        type: transaction.type,
+        receiptUrl 
+      });
+  
       let updatedBalance = calculateUpdatedBalance(account.balance, oldTransaction, true);
       updatedBalance = calculateUpdatedBalance(updatedBalance, transaction);
       await updateAccountState({ ...account, balance: updatedBalance });
-
+  
       setTransactionHistory(transactionHistory.map((t) => (t.id === transaction.id ? { ...transaction, receiptUrl } : t)));
     } catch (error) {
       console.error("Erro ao editar transação:", error);
