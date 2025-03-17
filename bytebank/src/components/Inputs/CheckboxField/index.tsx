@@ -11,7 +11,7 @@ interface CheckboxFieldProps {
 const CheckboxField = ({ id, label, checked, onChange, error }: CheckboxFieldProps) => {
     return (
         <div className="flex flex-col mb-6">
-            <div className="flex flex-row gap-4 items-center relative">
+            <div className="flex flex-row items-center relative">
                 <div
                     onClick={() => onChange?.({ target: { value: '', checked: !checked } } as React.ChangeEvent<HTMLInputElement>)}
                     className="cursor-pointer"
