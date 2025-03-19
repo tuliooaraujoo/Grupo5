@@ -1,18 +1,17 @@
-import  express, { json } from "express";
-import { static as serveStatic } from "express";
 import cors from "cors";
-import { fileURLToPath } from "url";
+import express, { json, static as serveStatic } from "express";
 import { dirname, join } from "path";
+import { fileURLToPath } from "url";
+import account from "./routes/accountRoutes.js";
 import fileRoutes from "./routes/fileRoutes.js";
-import account from "./routes/accountRoutes.js"
+import investment from "./routes/investmentRoutes.js";
 import transaction from "./routes/transactionsRoutes.js";
-import investment from "./routes/investmentRoutes.js"
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const app = express();
-const PORT = 3001;
+const PORT = 3010;
 
 app.use(cors());
 app.use(json());
